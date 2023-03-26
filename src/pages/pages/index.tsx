@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import TextLink from "@/component/atom/text/TextLink";
+import { TextLink } from "@/component/atom/text/TextLink";
 
 const pages = () => {
   const pageArray = [
@@ -31,10 +31,10 @@ const pages = () => {
         {pageArray.map(({ path, description }, idx) => (
           <li key={path} className="flex gap-4">
             <dl className="flex-1">
-              <dt class="text-xl font-medium leading-loose">
+              <dt className="text-xl font-medium leading-loose">
                 <TextLink href={path} text={path === "/" ? "トップ" : path} />
               </dt>
-              <dd class="text-gray-500">{description}</dd>
+              <dd className="text-gray-500">{description}</dd>
             </dl>
           </li>
         ))}

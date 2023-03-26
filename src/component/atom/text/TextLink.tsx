@@ -6,7 +6,7 @@ type Props = {
   text: string;
 };
 
-const TextLink: React.FC<Props> = (props) => {
+export const TextLink: React.FC<Props> = (props) => {
   const { text, href } = props;
   return (
     <Link
@@ -17,5 +17,3 @@ const TextLink: React.FC<Props> = (props) => {
     </Link>
   );
 };
-
-export default TextLink;
