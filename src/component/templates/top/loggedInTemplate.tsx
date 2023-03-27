@@ -17,7 +17,7 @@ export const LoggedIn: React.FC<Props> = ({ titleTag, children }) => {
       </Head>
       <div className="flex min-h-screen flex-col">
         <LoggedInHeader />
-        <div className="h-96 flex-1 bg-blue-50 p-4">{children}</div>
+        <div className="h-96 flex-1 p-4">{children}</div>
         <CommonFooter />
       </div>
     </>

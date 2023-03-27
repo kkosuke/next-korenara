@@ -14,13 +14,17 @@ export default function Home() {
         </LoggedIn>
       ) : (
         <LoggedOut titleTag="ココナラ">
-          <div>メインビジュアル</div>
-          <div>・人気カテゴリ</div>
-          <div>・人気商品</div>
-          <div>・新着商品</div>
-          <div>・人気ユーザー</div>
-          <div>・カテゴリ別人気商品</div>
-          <div>まずは無料登録から</div>
+          <div className="container mx-auto">
+            <div>
+              <div>メインビジュアル</div>
+              <div>まずは無料登録から</div>
+            </div>
+            <div>・人気カテゴリ</div>
+            <div>・人気商品</div>
+            <div>・新着商品</div>
+            <div>・人気ユーザー</div>
+            <div>・カテゴリ別人気商品</div>
+          </div>
         </LoggedOut>
       )}
     </>
