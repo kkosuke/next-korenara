@@ -1,6 +1,7 @@
 import React from "react";
-import { LogoutButton } from "@/component/atom/button/LogoutButton";
 import { TextLink } from "@/component/atom/text/TextLink";
+import { LoggedInHeaderMenu } from "../menu/loggedInHeaderMenu";
+import { LoggedInHeaderNotice } from "../menu/loggedInHeaderNotice";
 
 export const LoggedInHeader = () => {
   return (
@@ -14,9 +15,12 @@ export const LoggedInHeader = () => {
           </form>
         </div>
         <nav>
-          <ul>
+          <ul className="items-center gap-4 font-medium flex space-y-0 mr-auto ml-8">
             <li>
-              <LogoutButton />
+              <LoggedInHeaderNotice />
+            </li>
+            <li>
+              <LoggedInHeaderMenu />
             </li>
           </ul>
         </nav>
