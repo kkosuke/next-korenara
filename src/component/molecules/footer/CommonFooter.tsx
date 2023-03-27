@@ -2,7 +2,7 @@ import React from "react";
 
 export const CommonFooter = () => {
   return (
-    <footer>
+    <footer className="bg-blue-200 p-4">
       <div>
         <div>ロゴ</div>
         <nav>

@@ -4,7 +4,7 @@ import React from "react";
 export const LoggedOutHeader = () => {
   return (
     <>
-      <div>
+      <header className="bg-blue-200 p-4">
         <div>ログアウトヘッダー</div>
         <ul>
           <li>
@@ -27,7 +27,7 @@ export const LoggedOutHeader = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </header>
     </>
   );
 };
