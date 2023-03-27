@@ -5,6 +5,7 @@ import { LoggedOut } from "@/component/templates/top/loggedOutTemplate";
 export default function Home() {
   // const user = useUser();
   const { user } = useAuthContext();
+
   return (
     <>
       {user !== null ? (
