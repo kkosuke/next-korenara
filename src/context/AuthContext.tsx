@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { UserType, AuthProps, AuthContextProps } from "@/types/index";
 
 const AuthContext = createContext<Partial<AuthContextProps>>({});
+
 export const useAuthContext = () => {
   return useContext(AuthContext);
 };
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
   }, [router]);
 
   return isLoading ? (
-    ""
+    <></>
   ) : (
     <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );

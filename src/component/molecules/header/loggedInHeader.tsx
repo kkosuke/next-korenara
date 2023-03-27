@@ -1,14 +1,14 @@
 import React from "react";
-import { TextLink } from "@/component/atom/text/TextLink";
 import { LogoutButton } from "@/component/atom/button/LogoutButton";
+import { TextLink } from "@/component/atom/text/TextLink";
 
 export const LoggedInHeader = () => {
   return (
-    <>
-      <div>
-        <div>ログアウトヘッダー</div>
-        <div>
-          <form action="">
+    <header className="bg-blue-200 p-4">
+      <div className="mx-auto max-w-8xl justify-between items-center flex">
+        <TextLink href="/" text="ログインヘッダー" />
+        <div className="mr-auto ml-8">
+          <form action="" className="font-medium flex space-y-0">
             <input type="text" />
             <button type="submit">検索</button>
           </form>
@@ -21,6 +21,6 @@ export const LoggedInHeader = () => {
           </ul>
         </nav>
       </div>
-    </>
+    </header>
   );
 };

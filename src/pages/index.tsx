@@ -1,11 +1,10 @@
-import { useAuthContext, useUser } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
 import { LoggedOut } from "@/component/templates/top/loggedOutTemplate";
 
 export default function Home() {
   // const user = useUser();
   const { user } = useAuthContext();
-  console.log(!!user);
   return (
     <>
       {user !== null ? (
