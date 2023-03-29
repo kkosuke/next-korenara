@@ -1,9 +1,10 @@
 import { useAuthContext } from "@/context/AuthContext";
 import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
 import { LoggedOut } from "@/component/templates/top/loggedOutTemplate";
+import { AsideCategoryList } from "@/component/molecules/list/asideCategoryList";
+import { AsideHelpList } from "@/component/molecules/list/asideHelpList";
 
 export default function Home() {
-  // const user = useUser();
   const { user } = useAuthContext();
 
   return (
@@ -11,11 +12,10 @@ export default function Home() {
       {user !== null ? (
         <LoggedIn titleTag="ココナラ">
           <div className="container mx-auto flex">
-            <aside className="w-32 flex-none bg-blue-200 p-4">
-              <ul>
-                <li>・カテゴリ一覧（大・中）</li>
-                <li>・抜粋静的ページ</li>
-              </ul>
+            <aside className="w-52 flex-none p-4">
+              <AsideCategoryList />
+              <hr className="my-6 h-px border-0 bg-gray-300" />
+              <AsideHelpList />
             </aside>
             <main className="min-w-0 flex-1 overflow-auto bg-blue-50 p-4">
               <ul>

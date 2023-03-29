@@ -1,12 +1,12 @@
 import React from "react";
 import { TextLink } from "@/component/atom/text/TextLink";
-import { LoggedInHeaderMenu } from "../menu/loggedInHeaderMenu";
-import { LoggedInHeaderNotice } from "../menu/loggedInHeaderNotice";
+import { LoggedInHeaderMenu } from "@/component/molecules/menu/loggedInHeaderMenu";
+import { LoggedInHeaderNotice } from "@/component/molecules/menu/loggedInHeaderNotice";
 
 export const LoggedInHeader = () => {
   return (
     <header className="bg-blue-200 p-4">
-      <div className="mx-auto max-w-8xl justify-between items-center flex">
+      <div className="container mx-auto max-w-8xl justify-between items-center flex">
         <TextLink href="/" text="ログインヘッダー" />
         <div className="mr-auto ml-8">
           <form action="" className="font-medium flex space-y-0">

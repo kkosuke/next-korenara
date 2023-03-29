@@ -7,7 +7,7 @@ export const LoggedOutHeader = () => {
   return (
     <>
       <header className="bg-blue-200 p-4">
-        <div className="mx-auto max-w-8xl justify-between px-4 flex items-center">
+        <div className="container mx-auto max-w-8xl justify-between px-4 flex items-center">
           {router.pathname === "/" ? (
             <>
               <h1>ログアウトヘッダー</h1>

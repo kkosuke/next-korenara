@@ -3,8 +3,8 @@ import React from "react";
 
 export const CommonFooter = () => {
   return (
-    <footer>
-      <div className="p-4 bg-blue-200">
+    <footer className="bg-blue-200">
+      <div className="container mx-auto px-4 flex items-center">
         <div>ロゴ</div>
         <nav>
           <h5>見出し</h5>
