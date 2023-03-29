@@ -11,7 +11,7 @@ export const TextArrowLink: React.FC<Props> = (props) => {
   return (
     <Link
       href={href}
-      className="flex justify-between w-full items-center py-2 text-left"
+      className="flex justify-between w-full items-center py-2 text-left hover:bg-slate-300 active:bg-slate-300"
     >
       {text}
       <svg

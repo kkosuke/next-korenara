@@ -11,9 +11,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - https://sailboatui.com/
 
+### 参考
+
+- https://zenn.dev/ixkaito/articles/tailwindcss-fluid-spacing
+
 ## icon
 
 - https://heroicons.com/
+
+## Carousel
+
+- https://keen-slider.io/
 
 ## Getting Started
 
