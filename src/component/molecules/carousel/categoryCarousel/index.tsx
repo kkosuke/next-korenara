@@ -79,6 +79,7 @@ export const CategoryCarousel: React.FC<Props> = ({ items }) => {
               return (
                 currentSlide ===
                   instanceRef.current.track.details.slides.length - 1 ||
+                /* @ts-ignore */
                 currentSlide + instanceRef.current.options.slides?.perView >=
                   instanceRef.current.track.details.slides.length
               );
