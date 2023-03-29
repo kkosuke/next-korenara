@@ -23,6 +23,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - https://keen-slider.io/
 
+## ダミーアカウント
+
+```
+user1@gmail.com
+password
+```
+
+## TODO
+
+- レイアウト
+- ページ
+- API つなぎこみ
+- コンテンツ用意
+- react,typeScript 修正
+
 ## Getting Started
 
 First, run the development server:
