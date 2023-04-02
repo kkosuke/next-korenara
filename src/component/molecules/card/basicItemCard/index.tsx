@@ -26,7 +26,7 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
       className="rounded-sm overflow-hidden shadow mx-auto max-w-md bg-white"
       key={item.id}
     >
-      <Link href="#" className="block hover:opacity-70">
+      <Link href={`/item/${item.id}`} className="block hover:opacity-70">
         <Image
           src={item.image}
           className="aspect-video w-full object-cover"
@@ -35,8 +35,7 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
           height={160}
         />
         <div className="p-4 pt-3">
-          <p className={`${styles.description} text-gray-500`}>{item.title}</p>
-          <div className="flex flex-wrap items-center gap-3 mt-3">
+          <div className="flex flex-wrap items-center gap-3 mb-3">
             <div className="h-8 w-8">
               <Image
                 className="h-full w-full rounded-full object-cover object-center ring ring-white"
@@ -55,6 +54,9 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
               </div>
             </div>
           </div>
+          <p className={`${styles.description} text-gray-500`}>{item.title}</p>
+          <div className="mt-2">★ 5.0 (1)</div>
+          <div className="mt-2">&yen; 5,000円〜</div>
         </div>
       </Link>
     </Tag>

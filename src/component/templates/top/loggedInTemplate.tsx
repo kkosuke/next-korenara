@@ -8,11 +8,14 @@ type Props = {
   children: ReactNode;
 };
 
-export const LoggedIn: React.FC<Props> = ({ titleTag, children }) => {
+export const LoggedIn: React.FC<Props> = ({
+  titleTag = "コレナラ",
+  children,
+}) => {
   return (
     <>
       <Head>
-        <title>ココナラ</title>
+        <title>{titleTag}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="flex min-h-screen flex-col">

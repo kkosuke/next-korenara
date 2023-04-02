@@ -1,13 +1,56 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 export const LoggedInHeaderNotice = () => {
-  const [isShow, setIsShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  const toggle = () => {
+    if (isOpen) {
+      close(buttonRef.current);
+    } else {
+      buttonRef.current?.focus();
+      setIsOpen(true);
+    }
+  };
+  const close = (focusAfter?: HTMLElement | null) => {
+    if (!isOpen) return;
+    setIsOpen(false);
+    focusAfter && focusAfter.focus();
+  };
+  useEffect(() => {
+    const handleFocusIn = (event: MouseEvent) => {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(event.target as Node)
+      ) {
+        close();
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        close(buttonRef.current);
+      }
+    };
+
+    window.addEventListener("click", handleFocusIn);
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("click", handleFocusIn);
+      window.removeEventListener("keydown", handleEscape);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
   return (
-    <div className="relative block">
+    <div className="relative block" ref={panelRef}>
       <button
+        ref={buttonRef}
         type="button"
         className="align-top"
-        onClick={() => setIsShow(!isShow)}
+        onClick={toggle}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +68,7 @@ export const LoggedInHeaderNotice = () => {
         </svg>
       </button>
 
-      {isShow && (
+      {isOpen && (
         <div className="absolute right-0 z-10 mt-2 w-60 divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
           <h3 className="py-2 px-4 text-lg">お知らせ</h3>
           <ul className="divide-y divide-gray-200">

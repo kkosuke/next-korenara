@@ -26,27 +26,23 @@ export default function Home() {
       {user !== null ? (
         <LoggedIn titleTag="コレナラ">
           <div className="container mx-auto flex">
-            <aside className="w-52 flex-none p-4">
+            <aside className="w-80 flex-none p-4">
               <AsideCategoryList />
               <hr className="my-6 h-px border-0 bg-gray-300" />
               <AsideHelpList />
             </aside>
             <main className="min-w-0 flex-1 overflow-auto px-4">
               <section>
-                <h2 className="font-bold my-4 text-lg">ダミーアイテム</h2>
-                <div className="grid grid-cols-4 gap-4">
-                  {dummyItems.map((i) => (
-                    <BasicItemCard key={i.id} item={i} />
-                  ))}
-                </div>
-              </section>
-              <section>
                 <h2 className="font-bold my-4 text-lg">人気カテゴリ</h2>
                 <CategoryCarousel items={dummyPopularCategory} />
               </section>
               <section>
                 <h2 className="font-bold my-4 text-lg">おすすめ商品</h2>
-                <ItemCarousel items={dummyRecommendItem} />
+                <div className="grid grid-cols-4 gap-4">
+                  {dummyItems.map((i) => (
+                    <BasicItemCard key={i.id} item={i} />
+                  ))}
+                </div>
               </section>
               <section>
                 <h2 className="font-bold my-4 text-lg">注目ユーザー</h2>

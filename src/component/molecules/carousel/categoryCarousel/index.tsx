@@ -42,49 +42,48 @@ export const CategoryCarousel: React.FC<Props> = ({ items }) => {
       <ul ref={sliderRef} className="keen-slider pb-2">
         {items.map((item) => (
           <li
-            className="keen-slider__slide rounded-sm overflow-visible shadow mx-auto max-w-md bg-white"
+            className="keen-slider__slide overflow-visible rounded-md shadow mx-auto max-w-md bg-white"
             key={item.id}
           >
             <Link
               href={`category/${item.id}`}
-              className="block hover:opacity-70"
+              className="flex items-center gap-3 p-3 hover:opacity-70"
             >
-              <Image
-                src={item.image}
-                className="aspect-video w-full object-cover"
-                alt=""
-                width={200}
-                height={160}
-              />
-              <h3 className="p-4 font-medium text-gray-900">{item.name}</h3>
+              <div className="h-12 w-12">
+                <Image
+                  className="h-full w-full rounded-xl object-cover object-center ring ring-white"
+                  src={item.image}
+                  alt=""
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div>
+                <div className="font-medium text-gray-500">{item.name}</div>
+              </div>
             </Link>
           </li>
         ))}
       </ul>
       {loaded && instanceRef.current && (
         <>
-          <Arrow
-            left
-            onClick={(e: any) =>
-              e.stopPropagation() || instanceRef.current?.prev()
-            }
-            disabled={currentSlide === 0}
-          />
-
-          <Arrow
-            onClick={(e: any) =>
-              e.stopPropagation() || instanceRef.current?.next()
-            }
-            disabled={(() => {
-              return (
-                currentSlide ===
-                  instanceRef.current.track.details.slides.length - 1 ||
-                /* @ts-ignore */
-                currentSlide + instanceRef.current.options.slides?.perView >=
-                  instanceRef.current.track.details.slides.length
-              );
-            })()}
-          />
+          {currentSlide !== 0 && (
+            <Arrow
+              left
+              onClick={(e: any) =>
+                e.stopPropagation() || instanceRef.current?.prev()
+              }
+            />
+          )}
+          {/* @ts-ignore */
+          currentSlide + instanceRef.current.options.slides?.perView <
+            instanceRef.current.track.details.slides.length && (
+            <Arrow
+              onClick={(e: any) =>
+                e.stopPropagation() || instanceRef.current?.next()
+              }
+            />
+          )}
         </>
       )}
     </div>
@@ -92,7 +91,7 @@ export const CategoryCarousel: React.FC<Props> = ({ items }) => {
 };
 
 function Arrow(props: {
-  disabled: boolean;
+  disabled?: boolean;
   left?: boolean;
   onClick: (e: any) => void;
 }) {
