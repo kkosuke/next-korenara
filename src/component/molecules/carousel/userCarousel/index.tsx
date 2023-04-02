@@ -45,7 +45,7 @@ export const UserCarousel: React.FC<Props> = ({ items }) => {
         {items.map((user) => (
           <li
             key={user.id}
-            className="keen-slider__slide mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow"
+            className="keen-slider__slide mx-auto max-w-md overflow-hidden rounded-sm bg-white shadow"
           >
             <Link href="#" className="py-3 px-4 block hover:opacity-70">
               <div className="flex items-center gap-3">
@@ -123,9 +123,11 @@ function Arrow(props: {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className={`w-12 h-12 ${styles.arrow} ${
-          props.left ? styles.arrowLeft : styles.arrowRight
-        } ${props.disabled && styles.arrowDisabled}`}
+        className={`w-12 h-12 p-3 absolute rounded-full drop-shadow-md cursor-pointer hover:bg-zinc-200 bg-white ${
+          styles.arrow
+        } ${props.left ? styles.arrowLeft : styles.arrowRight} ${
+          props.disabled && styles.arrowDisabled
+        }`}
         onClick={props.onClick}
       >
         <path

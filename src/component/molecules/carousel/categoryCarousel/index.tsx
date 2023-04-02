@@ -25,7 +25,7 @@ export const CategoryCarousel: React.FC<Props> = ({ items }) => {
         slides: { perView: 1.5, spacing: 30 },
       },
       "(min-width: 1000px)": {
-        slides: { perView: 3.5, spacing: 10 },
+        slides: { perView: 4, spacing: 10 },
       },
     },
     slides: { perView: 1 },
@@ -42,7 +42,7 @@ export const CategoryCarousel: React.FC<Props> = ({ items }) => {
       <ul ref={sliderRef} className="keen-slider pb-2">
         {items.map((item) => (
           <li
-            className="keen-slider__slide rounded-lg overflow-visible shadow mx-auto max-w-md bg-white"
+            className="keen-slider__slide rounded-sm overflow-visible shadow mx-auto max-w-md bg-white"
             key={item.id}
           >
             <Link
@@ -104,9 +104,11 @@ function Arrow(props: {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className={`w-12 h-12 ${styles.arrow} ${
-          props.left ? styles.arrowLeft : styles.arrowRight
-        } ${props.disabled && styles.arrowDisabled}`}
+        className={`w-12 h-12 p-3 absolute rounded-full drop-shadow-md cursor-pointer hover:bg-zinc-200 bg-white ${
+          styles.arrow
+        } ${props.left ? styles.arrowLeft : styles.arrowRight} ${
+          props.disabled && styles.arrowDisabled
+        }`}
         onClick={props.onClick}
       >
         <path

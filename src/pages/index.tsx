@@ -15,6 +15,9 @@ import { dummyRecommendItem } from "@/dummyData/recommendItem";
 import { dummyRecommendUser } from "@/dummyData/recommendUser";
 import { dummyPopularCategoryItem } from "@/dummyData/popularCategoryItem";
 import Link from "next/link";
+import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
+import { dummyItem } from "@/dummyData/item";
+import { dummyItems } from "@/dummyData/items";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -29,6 +32,14 @@ export default function Home() {
               <AsideHelpList />
             </aside>
             <main className="min-w-0 flex-1 overflow-auto px-4">
+              <section>
+                <h2 className="font-bold my-4 text-lg">ダミーアイテム</h2>
+                <div className="grid grid-cols-4 gap-4">
+                  {dummyItems.map((i) => (
+                    <BasicItemCard key={i.id} item={i} />
+                  ))}
+                </div>
+              </section>
               <section>
                 <h2 className="font-bold my-4 text-lg">人気カテゴリ</h2>
                 <CategoryCarousel items={dummyPopularCategory} />

@@ -30,7 +30,7 @@ export const ItemCarousel: React.FC<Props> = ({ items }) => {
         slides: { perView: 1.5, spacing: 30 },
       },
       "(min-width: 1000px)": {
-        slides: { perView: 5.5, spacing: 10 },
+        slides: { perView: 4, spacing: 10 },
       },
     },
     slides: { perView: 3 },
@@ -48,7 +48,7 @@ export const ItemCarousel: React.FC<Props> = ({ items }) => {
         {items.map((item) => (
           <li
             key={item.id}
-            className="keen-slider__slide mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow"
+            className="keen-slider__slide mx-auto max-w-md overflow-hidden rounded-sm bg-white shadow"
           >
             <Link href="#" className="block hover:opacity-70">
               <Image
@@ -129,9 +129,11 @@ function Arrow(props: {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className={`w-12 h-12 ${styles.arrow} ${
-          props.left ? styles.arrowLeft : styles.arrowRight
-        } ${props.disabled && styles.arrowDisabled}`}
+        className={`w-12 h-12 p-3 absolute rounded-full drop-shadow-md cursor-pointer hover:bg-zinc-200 bg-white ${
+          styles.arrow
+        } ${props.left ? styles.arrowLeft : styles.arrowRight} ${
+          props.disabled && styles.arrowDisabled
+        }`}
         onClick={props.onClick}
       >
         <path

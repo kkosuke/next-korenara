@@ -13,12 +13,7 @@
 }
 
 .arrow {
-  position: absolute;
-  padding: 12px;
-  border-radius: 48px;
-  background: #f6f6f6;
-  border: 1px solid #333;
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
 }
 .arrowLeft {

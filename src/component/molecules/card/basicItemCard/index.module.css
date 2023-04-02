@@ -13,7 +13,12 @@
 }
 
 .arrow {
-  top: 45%;
+  position: absolute;
+  padding: 12px;
+  border-radius: 48px;
+  background: #f6f6f6;
+  border: 1px solid #333;
+  top: 50%;
   transform: translateY(-50%);
 }
 .arrowLeft {
@@ -24,4 +29,13 @@
 }
 .arrowDisabled {
   opacity: 0.6;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
 }
