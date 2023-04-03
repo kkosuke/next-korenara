@@ -12,7 +12,7 @@ const ItemSort = () => {
     max: "-",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(
       "/search?category[]=1&category[]=2&category[]=99999&budgetMin=0&budgetMin=300000"

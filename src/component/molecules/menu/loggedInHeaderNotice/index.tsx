@@ -14,7 +14,7 @@ type TypeNoticeData = {
 export const LoggedInHeaderNotice = () => {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLLIElement>(null);
   const [noticeData, setNoticeData] = useState<TypeNoticeData[]>(
     dummyMail.slice(0, 3)
   );
