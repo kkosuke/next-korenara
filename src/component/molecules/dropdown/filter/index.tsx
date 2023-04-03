@@ -6,7 +6,7 @@ type Props = {
   className?: string;
 };
 
-export const DropDownSort: React.FC<Props> = ({
+export const DropDownFilter: React.FC<Props> = ({
   label,
   children,
   className = "",
@@ -81,7 +81,7 @@ export const DropDownSort: React.FC<Props> = ({
       {isOpen && (
         <div
           id="dropdown-button"
-          className="absolute left-0 z-10 mt-2 w-48 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg"
+          className="absolute left-0 z-10 mt-2 w-[32rem] rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg"
         >
           {children}
         </div>

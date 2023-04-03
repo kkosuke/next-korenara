@@ -7,13 +7,13 @@ export const AsideCategoryList = () => {
       <h3 className="font-bold mb-2">カテゴリーから探す</h3>
       <ul>
         <li>
-          <TextArrowLink href="#" text="プログラミング" />
+          <TextArrowLink href="/category/1" text="プログラミング" />
         </li>
         <li>
-          <TextArrowLink href="#" text="ライフスタイル" />
+          <TextArrowLink href="/category/2" text="ライフスタイル" />
         </li>
         <li>
-          <TextArrowLink href="#" text="その他" />
+          <TextArrowLink href="/category/99999" text="その他" />
         </li>
       </ul>
     </section>
