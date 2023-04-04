@@ -29,8 +29,9 @@ const pages = () => {
     },
 
     { path: "item/1", description: "商品詳細", status: "済" },
+    { path: "item/1/edit", description: "商品詳細-編集", status: "済" },
+    { path: "item/1/edit", description: "商品詳細-新規", status: "済" },
 
-    { path: "item/1/edit", description: "商品詳細-編集", status: "-" },
     { path: "user/1", description: "ユーザー詳細", status: "-" },
     { path: "user/1/edit", description: "ユーザー詳細-編集", status: "-" },
     {

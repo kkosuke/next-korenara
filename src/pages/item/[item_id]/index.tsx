@@ -13,11 +13,11 @@ import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
 
 const ItemIdIndex = () => {
   const router = useRouter();
-  const { category_id } = router.query;
+  const { item_id } = router.query;
   const [item, setItem] = useState(dummyItem);
 
   return (
-    <LoggedIn titleTag="カテゴリー名から探す | コレナラ">
+    <LoggedIn titleTag={`${item.title} | コレナラ`}>
       <div className="container mx-auto flex max-w-7xl">
         <main className="min-w-0 flex-1 px-4 mb-4">
           <ol className="text-sm">
@@ -112,10 +112,31 @@ const ItemIdIndex = () => {
             </div>
           </section>
           <hr className="my-10 h-px border-0 bg-gray-300" />
-          <ItemReviewList item={item} />
+          <section>
+            <h2 className="font-bold text-xl mb-4">レビュー</h2>
+            <ItemReviewList item={item} />
+            <section className="mt-4">
+              <h2 className="font-bold text-md mb-4">レビューを投稿する</h2>
+              <input
+                type="text"
+                className="mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+                placeholder="タイトル"
+              />
+
+              <textarea
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
+                rows={3}
+                placeholder="レビュー内容"
+              ></textarea>
+            </section>
+          </section>
         </main>
         <aside className="w-80 flex-none p-4 hidden lg:block">
-          <div>気の利いた要素</div>
+          <div>
+            気の利いた要素
+            <br />
+            リスエストボタンとか編集ボタンとか置きたい・・・
+          </div>
           <hr className="my-6 h-px border-0 bg-gray-300" />
           <AsideHelpList />
         </aside>
