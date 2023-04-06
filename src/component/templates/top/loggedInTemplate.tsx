@@ -21,7 +21,7 @@ export const LoggedIn: React.FC<Props> = ({
       <div className="flex min-h-screen flex-col">
         <LoggedInHeader />
         <div
-          className="h-96 flex-1 p-4"
+          className="h-96 flex-1"
           style={{
             background: "#f8fafc",
           }}
