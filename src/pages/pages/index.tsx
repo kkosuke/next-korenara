@@ -45,7 +45,6 @@ const pages = () => {
       description: "リクエスト編集",
       status: "-",
     },
-    ,
     {
       path: "request/create",
       description: "リクエスト作成",
