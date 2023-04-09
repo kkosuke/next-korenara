@@ -40,6 +40,17 @@ const pages = () => {
       description: "リクエスト詳細",
       status: "-",
     },
+    {
+      path: "request/1/edit",
+      description: "リクエスト編集",
+      status: "-",
+    },
+    ,
+    {
+      path: "request/create",
+      description: "リクエスト作成",
+      status: "-",
+    },
 
     { path: "message/", description: "メッセージ一覧", status: "-" },
     {
