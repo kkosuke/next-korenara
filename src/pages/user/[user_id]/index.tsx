@@ -7,6 +7,7 @@ import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
 import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
 import { DropDownBasic } from "@/component/molecules/dropdown/basic";
+import Link from "next/link";
 
 const UserIdIndex = () => {
   const router = useRouter();
@@ -60,12 +61,12 @@ const UserIdIndex = () => {
                 childrenPosition="right"
               >
                 <div className="p-1">
-                  <a
-                    href="#"
+                  <Link
+                    href="/user/1/edit"
                     className="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     プロフィールを編集
-                  </a>
+                  </Link>
                 </div>
               </DropDownBasic>
             </div>
