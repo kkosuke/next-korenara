@@ -8,6 +8,8 @@ import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
 import { DropDownBasic } from "@/component/molecules/dropdown/basic";
 import Link from "next/link";
+import { dummyItems } from "@/dummyData/items";
+import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
 
 const UserIdIndex = () => {
   const router = useRouter();
@@ -101,6 +103,24 @@ const UserIdIndex = () => {
               <BasicTag className="mr-2" text="タグ名" removable />
               <BasicTag className="mr-2" text="タグ名" removable />
               <BasicTag className="mr-2" text="タグ名" removable />
+            </div>
+          </div>
+          <div className="rounded-lg bg-white p-8 mt-4">
+            <h2 className="font-bold text-lg text-gray-600 mb-4">
+              作成したサービス
+            </h2>
+            <div className="grid grid-cols-4 gap-4">
+              {dummyItems.map((i) => (
+                <BasicItemCard key={i.id} item={i} />
+              ))}
+            </div>
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                className="rounded-lg border border-primary-500 bg-primary-500 px-24 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
+              >
+                もっと見る
+              </button>
             </div>
           </div>
         </main>
