@@ -28,6 +28,28 @@ export const LoggedInHeader = () => {
         <nav>
           <ul className="items-center gap-4 font-medium flex space-y-0 mr-auto ml-8">
             <li>
+              <Link
+                href="/item/new"
+                className="inline-flex items-center gap-1.5 rounded-md border border-primary-500 bg-primary-500 px-3 py-1.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+                出品する
+              </Link>
+            </li>
+            <li>
               <Link href="/message">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
