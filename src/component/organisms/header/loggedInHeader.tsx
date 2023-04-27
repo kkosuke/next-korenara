@@ -2,8 +2,17 @@ import React from "react";
 import { LoggedInHeaderMenu } from "@/component/molecules/menu/loggedInHeaderMenu";
 import { LoggedInHeaderNotice } from "@/component/molecules/menu/loggedInHeaderNotice";
 import Link from "next/link";
+import { pushDataLayer } from "@/lib/analytics";
 
 export const LoggedInHeader = () => {
+  const testGtm = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "カテゴリー",
+      eventAction: "アクション",
+      eventLabel: "ラベル",
+    });
+  };
   return (
     <header className="p-4 border border-slate-300 border-t-0 border-x-0">
       <div className="container mx-auto max-w-8xl justify-between items-center flex">
@@ -30,6 +39,7 @@ export const LoggedInHeader = () => {
             <li>
               <Link
                 href="/item/new"
+                onClick={testGtm}
                 className="inline-flex items-center gap-1.5 rounded-md border border-primary-500 bg-primary-500 px-3 py-1.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
               >
                 <svg
