@@ -20,7 +20,18 @@ type Ga4Event = {
   eventLabel: string;
 };
 
-export type DataLayerType = PageViewEvent | InViewEvent | ClickEvent | Ga4Event;
+type Ga4TrackPageView = {
+  event: "ga4TrackPageView";
+  masqueradeLocation: string;
+  masqueradePageTitle: string;
+};
+
+export type DataLayerType =
+  | PageViewEvent
+  | InViewEvent
+  | ClickEvent
+  | Ga4Event
+  | Ga4TrackPageView;
 
 export const pushDataLayer = (data: DataLayerType): void => {
   window.dataLayer = window.dataLayer || [];
