@@ -21,7 +21,7 @@ const ItemIdIndex = () => {
     pushDataLayer({
       event: "ga4TrackPageView",
       masqueradePageTitle: `${item.title} | コレナラ`,
-      masqueradeLocation: router.pathname,
+      masqueradeLocation: `${router.pathname}_${item.user.name}`,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
