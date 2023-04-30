@@ -5,16 +5,25 @@ import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
 
 import { dummyItem } from "@/dummyData/item";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BasicTag } from "@/component/atom/tag/BasicTag";
 import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
+import { pushDataLayer } from "@/lib/analytics";
 
 const ItemIdIndex = () => {
   const router = useRouter();
   const { item_id } = router.query;
   const [item, setItem] = useState(dummyItem);
+
+  useEffect(() => {
+    pushDataLayer({
+      event: "ga4TrackPageView",
+      masqueradePageTitle: `${item.title} | コレナラ`,
+      masqueradeLocation: router.pathname,
+    });
+  }, [item.title, router.pathname]);
 
   return (
     <LoggedIn titleTag={`${item.title} | コレナラ`}>
