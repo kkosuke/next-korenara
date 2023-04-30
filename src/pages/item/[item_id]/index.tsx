@@ -23,7 +23,8 @@ const ItemIdIndex = () => {
       masqueradePageTitle: `${item.title} | コレナラ`,
       masqueradeLocation: router.pathname,
     });
-  }, [item.title, router.pathname]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <LoggedIn titleTag={`${item.title} | コレナラ`}>
