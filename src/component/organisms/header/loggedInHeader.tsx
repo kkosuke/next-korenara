@@ -5,18 +5,39 @@ import Link from "next/link";
 import { pushDataLayer } from "@/lib/analytics";
 
 export const LoggedInHeader = () => {
-  const testGtm = () => {
+  const onGtmClickLogo = () => {
     pushDataLayer({
       event: "ga4Event",
-      eventCategory: "カテゴリー",
-      eventAction: "アクション",
-      eventLabel: "ラベル",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "ロゴ",
     });
   };
+  const onGtmClickItemNew = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "出品する",
+    });
+  };
+  const onGtmClickMessage = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "メッセージ",
+    });
+  };
+
   return (
     <header className="p-4 border border-slate-300 border-t-0 border-x-0">
       <div className="container mx-auto max-w-8xl justify-between items-center flex">
-        <Link href="/" className="text-blue-400	text-2xl font-bold">
+        <Link
+          href="/"
+          className="text-blue-400	text-2xl font-bold"
+          onClick={onGtmClickLogo}
+        >
           ココカラ
         </Link>
         <div className="mr-auto ml-8 w-1/3">
@@ -39,7 +60,7 @@ export const LoggedInHeader = () => {
             <li>
               <Link
                 href="/item/new"
-                onClick={testGtm}
+                onClick={onGtmClickItemNew}
                 className="inline-flex items-center gap-1.5 rounded-md border border-primary-500 bg-primary-500 px-3 py-1.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
               >
                 <svg
@@ -60,7 +81,7 @@ export const LoggedInHeader = () => {
               </Link>
             </li>
             <li>
-              <Link href="/message">
+              <Link href="/message" onClick={onGtmClickMessage}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
