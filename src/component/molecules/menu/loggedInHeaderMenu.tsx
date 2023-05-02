@@ -3,6 +3,8 @@ import Image from "next/image";
 import { app } from "@/lib/firebase";
 import { getAuth, signOut } from "firebase/auth";
 import Link from "next/link";
+import { pushDataLayer } from "@/lib/analytics";
+
 const logout = (): Promise<void> => {
   const auth = getAuth(app);
   return signOut(auth);
@@ -13,11 +15,46 @@ export const LoggedInHeaderMenu = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const handleLogout = (): void => {
-    logout().catch((error) => console.error(error));
+  const onGtmClickProfile = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "プロフィール",
+    });
   };
-  const handleNothing = (): void => {
-    alert("なにもないよ");
+  const onGtmClickSetting = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "設定",
+    });
+  };
+  const onGtmClickKeep = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "キープ",
+    });
+  };
+  const onGtmClickViewed = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "履歴",
+    });
+  };
+  const handleLogout = (): void => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "ヘッダーリンク",
+      eventAction: "クリック",
+      eventLabel: "ログアウト",
+    });
+    logout().catch((error) => console.error(error));
   };
   const toggle = () => {
     if (isOpen) {
@@ -100,6 +137,7 @@ export const LoggedInHeaderMenu = () => {
             <Link
               href="/user/1"
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
+              onClick={onGtmClickProfile}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,6 +158,7 @@ export const LoggedInHeaderMenu = () => {
             <Link
               href="/user/1/edit"
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+              onClick={onGtmClickSetting}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,6 +186,7 @@ export const LoggedInHeaderMenu = () => {
             <Link
               href="/keep"
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
+              onClick={onGtmClickKeep}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -172,6 +212,7 @@ export const LoggedInHeaderMenu = () => {
             <Link
               href="/viewed"
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+              onClick={onGtmClickViewed}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

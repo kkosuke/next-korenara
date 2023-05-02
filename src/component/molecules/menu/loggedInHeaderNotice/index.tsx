@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./index.module.css";
+import { pushDataLayer } from "@/lib/analytics";
 
 type TypeNoticeData = {
   id: number;
@@ -29,6 +30,12 @@ export const LoggedInHeaderNotice = () => {
     } else {
       buttonRef.current?.focus();
       setIsOpen(true);
+      pushDataLayer({
+        event: "ga4Event",
+        eventCategory: "ヘッダーリンク",
+        eventAction: "クリック",
+        eventLabel: "お知らせ",
+      });
     }
   };
   const close = (focusAfter?: HTMLElement | null) => {
