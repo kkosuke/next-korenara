@@ -16,7 +16,6 @@ import { dummyRecommendUser } from "@/dummyData/recommendUser";
 import { dummyPopularCategoryItem } from "@/dummyData/popularCategoryItem";
 import Link from "next/link";
 import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
-import { dummyItem } from "@/dummyData/item";
 import { dummyItems } from "@/dummyData/items";
 
 export default function Home() {
