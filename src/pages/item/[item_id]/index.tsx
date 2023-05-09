@@ -21,9 +21,10 @@ const ItemIdIndex = () => {
     let masqueradeLocation = asPath.split("?")[1]
       ? `${asPath.split("?")[0]}__${item.user.name}?${asPath.split("?")[1]}`
       : `${asPath.split("?")[0]}__${item.user.name}`;
-    masqueradeLocation = location.origin + masqueradeLocation;
+    masqueradeLocation = masqueradeLocation;
     pushDataLayer({
-      page_location: masqueradeLocation,
+      event: "ga4TrackPageView",
+      masqueradeLocation: masqueradeLocation,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

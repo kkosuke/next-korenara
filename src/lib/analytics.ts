@@ -23,7 +23,6 @@ type Ga4Event = {
 type Ga4TrackPageView = {
   event: "ga4TrackPageView";
   masqueradeLocation: string;
-  masqueradePageTitle: string;
 };
 
 type Ga4PageLocation = {
