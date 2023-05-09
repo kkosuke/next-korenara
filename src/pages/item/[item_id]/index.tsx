@@ -18,11 +18,12 @@ const ItemIdIndex = () => {
 
   useEffect(() => {
     const asPath = router.asPath;
-    const masqueradeLocation = asPath.split("?")[1]
-      ? `${asPath.split("?")[0]}___${item.user.name}?${asPath.split("?")[1]}`
-      : `${asPath.split("?")[0]}___${item.user.name}`;
+    let masqueradeLocation = asPath.split("?")[1]
+      ? `${asPath.split("?")[0]}__${item.user.name}?${asPath.split("?")[1]}`
+      : `${asPath.split("?")[0]}__${item.user.name}`;
+    masqueradeLocation = location.origin + masqueradeLocation;
     pushDataLayer({
-      masqueradeLocation,
+      page_location: masqueradeLocation,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
