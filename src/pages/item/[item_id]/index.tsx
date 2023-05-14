@@ -14,15 +14,19 @@ import { pushDataLayer } from "@/lib/analytics";
 
 const ItemIdIndex = () => {
   const router = useRouter();
-  const { item_id } = router.query;
   const [item, setItem] = useState(dummyItem);
 
   useEffect(() => {
+    const asPath = router.asPath;
+    let masqueradeLocation = asPath.split("?")[1]
+      ? `${asPath.split("?")[0]}__${item.user.name}?${asPath.split("?")[1]}`
+      : `${asPath.split("?")[0]}__${item.user.name}`;
+    masqueradeLocation = masqueradeLocation;
     pushDataLayer({
       event: "ga4TrackPageView",
-      masqueradePageTitle: `${item.title} | コレナラ`,
-      masqueradeLocation: `${router.asPath}___${item.user.name}`,
+      masqueradeLocation: masqueradeLocation,
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

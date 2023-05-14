@@ -23,7 +23,10 @@ type Ga4Event = {
 type Ga4TrackPageView = {
   event: "ga4TrackPageView";
   masqueradeLocation: string;
-  masqueradePageTitle: string;
+};
+
+type Ga4PageLocation = {
+  page_location: string;
 };
 
 export type DataLayerType =
@@ -31,7 +34,8 @@ export type DataLayerType =
   | InViewEvent
   | ClickEvent
   | Ga4Event
-  | Ga4TrackPageView;
+  | Ga4TrackPageView
+  | Ga4PageLocation;
 
 export const pushDataLayer = (data: DataLayerType): void => {
   window.dataLayer = window.dataLayer || [];
