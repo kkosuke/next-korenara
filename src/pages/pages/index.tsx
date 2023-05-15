@@ -21,11 +21,11 @@ const pages = () => {
     { path: "user/1", description: "ユーザー詳細", status: "済" },
     { path: "user/1/edit", description: "ユーザー詳細-編集", status: "済" },
 
-    { path: "message/", description: "メッセージルーム一覧", status: "-" },
+    { path: "message/", description: "メッセージルーム一覧", status: "【済】" },
     {
       path: "message/room/1",
       description: "メッセージルーム画面",
-      status: "-",
+      status: "【済】",
     },
 
     {
