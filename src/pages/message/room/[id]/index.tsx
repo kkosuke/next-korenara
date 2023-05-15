@@ -1,13 +1,14 @@
 import { AsideCategoryList } from "@/component/molecules/list/asideCategoryList";
 import { AsideHelpList } from "@/component/molecules/list/asideHelpList";
 import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
-import Image from "next/image";
-import React from "react";
-import { dummyUser } from "@/dummyData/user";
+import React, { useState } from "react";
 import Link from "next/link";
-import { DropDownBasic } from "@/component/molecules/dropdown/basic";
+import { dummyMessages } from "@/dummyData/messages";
+import { MessageCard } from "@/component/molecules/card/messageCard";
 
 const MessageRoomIdIndex = () => {
+  const [messages, setMessages] = useState(dummyMessages);
+  console.log(messages);
   return (
     <LoggedIn titleTag="●●さんとのメッセージ | コレナラ">
       <div className="container flex mx-auto max-w-7xl p-4 pb-2">
@@ -86,111 +87,9 @@ const MessageRoomIdIndex = () => {
           </div>
 
           <ul>
-            <li className="rounded-md shadow bg-white p-4 mb-4">
-              <div className="flex justify-between">
-                <div className="block hover:opacity-70 w-11/12">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="h-8 w-8">
-                      <Image
-                        className="h-full w-full rounded-full object-cover object-center ring ring-white"
-                        src={dummyUser.image}
-                        alt=""
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-secondary-500">
-                        {dummyUser.name}
-                      </div>
-                      <div className="text-xs text-secondary-400">
-                        2023年4月24日 23:52 [編集済]
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <DropDownBasic
-                  label={<>…</>}
-                  className="w-1/12 block align-top text-right"
-                  childrenPosition="right"
-                >
-                  <div className="p-1">
-                    <Link
-                      href="/user/1/edit"
-                      className="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      メッセージを編集
-                    </Link>
-                  </div>
-                  <div className="p-1">
-                    <Link
-                      href="/user/1/edit"
-                      className="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      メッセージを削除
-                    </Link>
-                  </div>
-                </DropDownBasic>
-              </div>
-              <div className="mt-4">
-                <p className="text-slate-600">
-                  ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。
-                </p>
-              </div>
-            </li>
-
-            <li className="rounded-md shadow bg-white p-4 mb-4">
-              <div className="flex justify-between">
-                <div className="block hover:opacity-70 w-11/12">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="h-8 w-8">
-                      <Image
-                        className="h-full w-full rounded-full object-cover object-center ring ring-white"
-                        src={dummyUser.image}
-                        alt=""
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-secondary-500">
-                        {dummyUser.name}
-                      </div>
-                      <div className="text-xs text-secondary-400">
-                        2023年4月2日 12:11
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <DropDownBasic
-                  label={<>…</>}
-                  className="w-1/12 block align-top text-right"
-                  childrenPosition="right"
-                >
-                  <div className="p-1">
-                    <Link
-                      href="/user/1/edit"
-                      className="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      メッセージを編集
-                    </Link>
-                  </div>
-                  <div className="p-1">
-                    <Link
-                      href="/user/1/edit"
-                      className="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      メッセージを削除
-                    </Link>
-                  </div>
-                </DropDownBasic>
-              </div>
-              <div className="mt-4">
-                <p className="text-slate-600">
-                  ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。ここに文章が入るかもしれません。
-                </p>
-              </div>
-            </li>
+            {messages.map((message) => (
+              <MessageCard message={message} key={message.id} />
+            ))}
           </ul>
         </main>
       </div>
