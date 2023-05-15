@@ -43,7 +43,7 @@ export const BasicTag: React.FC<Props> = ({
             </span>
           ) : (
             <span
-              className={`${className} rounded-md bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-600`}
+              className={`${className} inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-600`}
             >
               {" "}
               {text}

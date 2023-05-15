@@ -16,7 +16,9 @@ const KeepIndex = () => {
           <AsideHelpList />
         </aside>
         <main className="min-w-0 flex-1 px-4">
-          <p className="pt-4 font-bold text-2xl">キープしているプラン</p>
+          <p className="pt-4 font-bold text-2xl">
+            キープしているプラン（作成予定）
+          </p>
           <p className="text-gray-600 my-4">
             キープしているプランを最大40件表示します
           </p>

@@ -16,7 +16,7 @@ const ViewedIndex = () => {
           <AsideHelpList />
         </aside>
         <main className="min-w-0 flex-1 px-4">
-          <p className="pt-4 font-bold text-2xl">閲覧したプラン</p>
+          <p className="pt-4 font-bold text-2xl">閲覧したプラン（作成予定）</p>
           <p className="text-gray-600 my-4">
             これまで閲覧したプランを最大40件表示します
           </p>

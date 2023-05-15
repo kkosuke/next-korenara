@@ -30,8 +30,8 @@ const UserIdIndex = () => {
                 height={60}
               />
             </div>
-            <div>
-              <h1 className="pt-4 font-bold text-2xl mb-4">{user.name}</h1>
+            <div className="self-center">
+              <h1 className="font-bold text-2xl mb-4">{user.name}</h1>
               <div className="text-sm font-medium text-secondary-500">
                 最終ログイン {"8分"}前
               </div>
@@ -95,14 +95,14 @@ const UserIdIndex = () => {
           </div>
           <div className="rounded-lg bg-white p-8 mt-4">
             <h2 className="font-bold text-lg text-gray-600 mb-2">
-              興味のあるジャンル
+              興味のあるジャンル（作成予定）
             </h2>
             <div className="mt-4">
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
+              <BasicTag className="mr-2" text="タグ名" />
+              <BasicTag className="mr-2" text="タグ名" />
+              <BasicTag className="mr-2" text="タグ名" />
+              <BasicTag className="mr-2" text="タグ名" />
+              <BasicTag className="mr-2" text="タグ名" />
             </div>
           </div>
           <div className="rounded-lg bg-white p-8 mt-4">
