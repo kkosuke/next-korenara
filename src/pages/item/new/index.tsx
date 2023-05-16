@@ -45,6 +45,7 @@ const ItemIdNew = () => {
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
               value=""
               placeholder="商品の価格を整数で入力してください。"
+              defaultValue=""
             />
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               タグの登録
