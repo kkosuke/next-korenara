@@ -72,7 +72,7 @@ const ItemIdEdit = () => {
             ></textarea>
 
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
-              レビュー{" "}
+              レビュー（作成予定）
             </p>
             <ItemReviewList item={item} removable />
 

@@ -18,6 +18,7 @@ type Ga4Event = {
   eventCategory: string;
   eventAction: string;
   eventLabel: string;
+  eventValue?: string | number;
 };
 
 type Ga4TrackPageView = {

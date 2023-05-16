@@ -14,6 +14,7 @@ type Props = {
       name: string;
       image: string;
     };
+    price: number;
   };
   tagName?: keyof JSX.IntrinsicElements;
 };
@@ -56,7 +57,7 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
           </div>
           <p className={`${styles.description} text-gray-500`}>{item.title}</p>
           <div className="mt-2">★ 5.0 (1)</div>
-          <div className="mt-2">&yen; 5,000円〜</div>
+          <div className="mt-2">&yen; {item.price}</div>
         </div>
       </Link>
     </Tag>
