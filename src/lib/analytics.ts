@@ -17,7 +17,7 @@ type Ga4Event = {
   event: "ga4Event";
   eventCategory: string;
   eventAction: string;
-  eventLabel: string;
+  eventLabel?: string;
   eventValue?: string | number;
 };
 
