@@ -3,6 +3,9 @@ import "keen-slider/keen-slider.min.css";
 import styles from "./index.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { pushDataLayer } from "@/lib/analytics";
+import { useRouter } from "next/router";
+import { directoryNameFromPathName } from "@/constants/utils/directoryNameFromPathName";
 
 type Props = {
   item: {
@@ -21,13 +24,27 @@ type Props = {
 
 export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
   const Tag = tagName || "div";
+  const router = useRouter();
 
+  const handleClick = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: directoryNameFromPathName(router.pathname),
+      eventAction: "クリック",
+      eventLabel: "商品カード",
+      eventValue: item.price,
+    });
+  };
   return (
     <Tag
       className="rounded-sm overflow-hidden shadow mx-auto max-w-md bg-white"
       key={item.id}
     >
-      <Link href={`/item/${item.id}`} className="block hover:opacity-70">
+      <Link
+        href={`/item/${item.id}`}
+        className="block hover:opacity-70"
+        onClick={handleClick}
+      >
         <Image
           src={item.image}
           className="aspect-video w-full object-cover"

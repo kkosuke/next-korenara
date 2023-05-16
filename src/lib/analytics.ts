@@ -35,5 +35,14 @@ export type DataLayerType =
 
 export const pushDataLayer = (data: DataLayerType): void => {
   window.dataLayer = window.dataLayer || [];
+  // 空の場合は、WEB側で空にしないと、直前の値が残ってしまった。
+  if (data.event === "ga4Event") {
+    if (!data.eventLabel) {
+      data.eventLabel = "";
+    }
+    if (!data.eventValue) {
+      data.eventValue = "";
+    }
+  }
   window.dataLayer.push(data);
 };
