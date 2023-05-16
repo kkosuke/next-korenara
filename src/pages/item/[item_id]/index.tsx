@@ -90,6 +90,9 @@ const ItemIdIndex = () => {
           <p className="pt-4 font-bold text-xl text-secondary-500">
             {item.subTitle}
           </p>
+          <p className="pt-4 font-bold text-xl text-secondary-500">
+            &yen; {item.price}
+          </p>
           <div className="mt-4">
             <BasicTag className="mr-2" href="#" text="タグ名" />
             <BasicTag className="mr-2" href="#" text="タグ名" />
@@ -116,6 +119,9 @@ const ItemIdIndex = () => {
             </div>
           </div>
           <hr className="my-10 h-px border-0 bg-gray-300" />
+          <div>
+            テンプレートのため、どの商品IDを表示しても、この商品が表示されます
+          </div>
           <div>{item.detail}</div>
           <hr className="my-10 h-px border-0 bg-gray-300" />
           <section>
