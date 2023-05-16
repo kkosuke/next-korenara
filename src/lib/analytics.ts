@@ -35,8 +35,5 @@ export type DataLayerType =
 
 export const pushDataLayer = (data: DataLayerType): void => {
   window.dataLayer = window.dataLayer || [];
-  if (data.event === "ga4Event") {
-    data.eventValue = data.eventValue || 0;
-  }
   window.dataLayer.push(data);
 };
