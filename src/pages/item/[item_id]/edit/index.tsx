@@ -38,6 +38,15 @@ const ItemIdEdit = () => {
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
               value={item.subTitle}
             />
+            <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
+              商品の価格（円）
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value={item.price}
+              placeholder="商品の価格を整数で入力してください。"
+            />
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               タグの登録
               <span className="font-normal text-xs text-gray-400 ml-2">
@@ -72,7 +81,7 @@ const ItemIdEdit = () => {
             ></textarea>
 
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
-              レビュー{" "}
+              レビュー（作成予定）
             </p>
             <ItemReviewList item={item} removable />
 

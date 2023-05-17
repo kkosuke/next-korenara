@@ -4,6 +4,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 1000,
     user: {
       id: 1,
       name: "ユーザー名",
@@ -16,6 +17,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 2000,
     user: {
       id: 2,
       name: "ユーザー名",
@@ -28,6 +30,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 3000,
     user: {
       id: 3,
       name: "ユーザー名",
@@ -40,6 +43,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 4000,
     user: {
       id: 4,
       name: "ユーザー名",
@@ -52,6 +56,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 5000,
     user: {
       id: 5,
       name: "ユーザー名",
@@ -64,6 +69,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 6000,
     user: {
       id: 6,
       name: "ユーザー名",
@@ -76,6 +82,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 7000,
     user: {
       id: 7,
       name: "ユーザー名",
@@ -88,6 +95,7 @@ export const dummyItems = [
     image:
       "https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
     title: "商品名が入ります。商品名が入ります。商品名が入ります。",
+    price: 8000,
     user: {
       id: 8,
       name: "ユーザー名",

@@ -1,18 +1,15 @@
 import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
 
-import { dummyItem } from "@/dummyData/item";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BasicTag } from "@/component/atom/tag/BasicTag";
-import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
 
 const ItemIdNew = () => {
   const router = useRouter();
   const { item_id } = router.query;
-  const [item, setItem] = useState(dummyItem);
 
   return (
-    <LoggedIn titleTag={`商品編集 | ${item.title} | コレナラ`}>
+    <LoggedIn titleTag={`商品新規登録 | コレナラ`}>
       <div className="container mx-auto  max-w-5xl">
         <div className="px-4">
           <div>
@@ -28,15 +25,27 @@ const ItemIdNew = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={item.title}
+              value=""
+              placeholder="商品名を入力してください"
             />
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
-              サブタイトル
+              サブタイトル（任意）
             </p>
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={item.subTitle}
+              value=""
+              placeholder="サブタイトルを入力してください"
+            />
+            <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
+              商品の価格（円）
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value=""
+              placeholder="商品の価格を整数で入力してください。"
+              defaultValue=""
             />
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               タグの登録
@@ -67,8 +76,8 @@ const ItemIdNew = () => {
             <textarea
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
               rows={20}
-              placeholder=""
-              value={item.detail}
+              placeholder="商品に関する説明文を入力してください。"
+              value=""
             ></textarea>
 
             <div className="mt-4 text-center">

@@ -17,7 +17,8 @@ type Ga4Event = {
   event: "ga4Event";
   eventCategory: string;
   eventAction: string;
-  eventLabel: string;
+  eventLabel?: string;
+  eventValue?: string | number;
 };
 
 type Ga4TrackPageView = {
@@ -25,19 +26,23 @@ type Ga4TrackPageView = {
   masqueradeLocation: string;
 };
 
-type Ga4PageLocation = {
-  page_location: string;
-};
-
 export type DataLayerType =
   | PageViewEvent
   | InViewEvent
   | ClickEvent
   | Ga4Event
-  | Ga4TrackPageView
-  | Ga4PageLocation;
+  | Ga4TrackPageView;
 
 export const pushDataLayer = (data: DataLayerType): void => {
   window.dataLayer = window.dataLayer || [];
+  // 空の場合は、WEB側で空にしないと、直前の値が残ってしまった。
+  if (data.event === "ga4Event") {
+    if (!data.eventLabel) {
+      data.eventLabel = "";
+    }
+    if (!data.eventValue) {
+      data.eventValue = "";
+    }
+  }
   window.dataLayer.push(data);
 };

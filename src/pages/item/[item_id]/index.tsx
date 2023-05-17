@@ -16,6 +16,17 @@ const ItemIdIndex = () => {
   const router = useRouter();
   const [item, setItem] = useState(dummyItem);
 
+  const handleSendMessage = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "商品詳細",
+      eventAction: "クリック",
+      eventLabel: "メッセージを送信",
+      eventValue: item.price,
+    });
+    alert("未作成機能です");
+  };
+
   useEffect(() => {
     const asPath = router.asPath;
     let masqueradeLocation = asPath.split("?")[1]
@@ -79,6 +90,9 @@ const ItemIdIndex = () => {
           <p className="pt-4 font-bold text-xl text-secondary-500">
             {item.subTitle}
           </p>
+          <p className="pt-4 font-bold text-xl text-secondary-500">
+            &yen; {item.price}
+          </p>
           <div className="mt-4">
             <BasicTag className="mr-2" href="#" text="タグ名" />
             <BasicTag className="mr-2" href="#" text="タグ名" />
@@ -105,6 +119,9 @@ const ItemIdIndex = () => {
             </div>
           </div>
           <hr className="my-10 h-px border-0 bg-gray-300" />
+          <div>
+            テンプレートのため、どの商品IDを表示しても、この商品が表示されます
+          </div>
           <div>{item.detail}</div>
           <hr className="my-10 h-px border-0 bg-gray-300" />
           <section>
@@ -118,6 +135,7 @@ const ItemIdIndex = () => {
             </div>
             <div className="mt-4">
               <button
+                onClick={handleSendMessage}
                 type="button"
                 className="rounded-lg border border-primary-500 bg-primary-500 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
               >
@@ -127,21 +145,30 @@ const ItemIdIndex = () => {
           </section>
           <hr className="my-10 h-px border-0 bg-gray-300" />
           <section>
-            <h2 className="font-bold text-xl mb-4">レビュー</h2>
+            <h2 className="font-bold text-xl mb-4">レビュー（作成予定）</h2>
             <ItemReviewList item={item} />
-            <section className="mt-4">
-              <h2 className="font-bold text-md mb-4">レビューを投稿する</h2>
+            <section className="mt-8">
+              <h2 className="font-bold text-md mb-4">
+                レビューを投稿する（もし商品を購入していたら）
+              </h2>
               <input
                 type="text"
                 className="mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                 placeholder="タイトル"
               />
-
               <textarea
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
                 rows={3}
                 placeholder="レビュー内容"
               ></textarea>
+              <div className="mt-4 text-center">
+                <button
+                  type="button"
+                  className="rounded-lg border border-primary-500 bg-primary-500 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
+                >
+                  投稿する
+                </button>
+              </div>
             </section>
           </section>
         </main>

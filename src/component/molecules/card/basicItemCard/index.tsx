@@ -3,6 +3,9 @@ import "keen-slider/keen-slider.min.css";
 import styles from "./index.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { pushDataLayer } from "@/lib/analytics";
+import { useRouter } from "next/router";
+import { directoryNameFromPathName } from "@/constants/utils/directoryNameFromPathName";
 
 type Props = {
   item: {
@@ -14,19 +17,34 @@ type Props = {
       name: string;
       image: string;
     };
+    price: number;
   };
   tagName?: keyof JSX.IntrinsicElements;
 };
 
 export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
   const Tag = tagName || "div";
+  const router = useRouter();
 
+  const handleClick = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: directoryNameFromPathName(router.pathname),
+      eventAction: "クリック",
+      eventLabel: "商品カード",
+      eventValue: item.price,
+    });
+  };
   return (
     <Tag
       className="rounded-sm overflow-hidden shadow mx-auto max-w-md bg-white"
       key={item.id}
     >
-      <Link href={`/item/${item.id}`} className="block hover:opacity-70">
+      <Link
+        href={`/item/${item.id}`}
+        className="block hover:opacity-70"
+        onClick={handleClick}
+      >
         <Image
           src={item.image}
           className="aspect-video w-full object-cover"
@@ -56,7 +74,7 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
           </div>
           <p className={`${styles.description} text-gray-500`}>{item.title}</p>
           <div className="mt-2">★ 5.0 (1)</div>
-          <div className="mt-2">&yen; 5,000円〜</div>
+          <div className="mt-2">&yen; {item.price}</div>
         </div>
       </Link>
     </Tag>
