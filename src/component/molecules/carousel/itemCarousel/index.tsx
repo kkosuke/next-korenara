@@ -50,7 +50,7 @@ export const ItemCarousel: React.FC<Props> = ({ items }) => {
             key={item.id}
             className="keen-slider__slide mx-auto max-w-md overflow-hidden rounded-sm bg-white shadow"
           >
-            <Link href="#" className="block hover:opacity-70">
+            <Link href={`/item/${item.id}`} className="block hover:opacity-70">
               <Image
                 src={item.image}
                 className="aspect-video w-full object-cover"

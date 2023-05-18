@@ -4,6 +4,7 @@ import { app } from "@/lib/firebase";
 import { getAuth, signOut } from "firebase/auth";
 import Link from "next/link";
 import { pushDataLayer } from "@/lib/analytics";
+import { useAuthContext } from "@/context/AuthContext";
 
 const logout = (): Promise<void> => {
   const auth = getAuth(app);
@@ -11,6 +12,7 @@ const logout = (): Promise<void> => {
 };
 
 export const LoggedInHeaderMenu = () => {
+  const { user } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -128,8 +130,10 @@ export const LoggedInHeaderMenu = () => {
                 />
               </div>
               <div className="text-sm">
-                <div className="font-medium text-gray-700">Steven Jobs</div>
-                <div className="text-gray-400">jobs@sailboatui.com</div>
+                <div className="font-medium text-gray-700">
+                  {user?.displayName ? user?.displayName : "名前_未登録"}
+                </div>
+                <div className="text-gray-400">{user?.email}</div>
               </div>
             </div>
           </div>

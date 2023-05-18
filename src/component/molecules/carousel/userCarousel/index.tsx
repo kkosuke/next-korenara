@@ -47,7 +47,10 @@ export const UserCarousel: React.FC<Props> = ({ items }) => {
             key={user.id}
             className="keen-slider__slide mx-auto max-w-md overflow-hidden rounded-sm bg-white shadow"
           >
-            <Link href="#" className="py-3 px-4 block hover:opacity-70">
+            <Link
+              href={`/user/${user.id}`}
+              className="py-3 px-4 block hover:opacity-70"
+            >
               <div className="flex items-center gap-3">
                 <div className="relative h-10 w-10">
                   <Image

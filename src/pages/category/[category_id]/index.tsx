@@ -15,18 +15,18 @@ const CategoryIndex = () => {
 
   return (
     <LoggedIn titleTag="カテゴリー名から探す | コレナラ">
-      <div className="container mx-auto flex">
+      <div className="container mx-auto flex pt-4">
         <aside className="w-80 flex-none p-4 hidden lg:block">
           <AsideCategoryList />
           <hr className="my-6 h-px border-0 bg-gray-300" />
           <AsideHelpList />
         </aside>
-        <main className="min-w-0 flex-1 px-4">
-          <p className="pt-4 font-bold text-2xl">
+        <main className="min-w-0 flex-1 px-4 pb-8">
+          <h1 className="pt-4 font-bold text-2xl">
             カテゴリー名 {"{"}
             {category_id}
             {"}"} から探す
-          </p>
+          </h1>
           <p className="text-gray-600 my-4">
             {"{"}
             {1000}
