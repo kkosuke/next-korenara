@@ -11,6 +11,7 @@ import Link from "next/link";
 import { BasicTag } from "@/component/atom/tag/BasicTag";
 import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
 import { pushDataLayer } from "@/lib/analytics";
+import { Link as Scroll } from "react-scroll";
 
 const ItemIdIndex = () => {
   const router = useRouter();
@@ -25,6 +26,15 @@ const ItemIdIndex = () => {
       eventValue: item.price,
     });
     alert("未作成機能です");
+  };
+
+  const handleQuestion = () => {
+    pushDataLayer({
+      event: "ga4Event",
+      eventCategory: "商品詳細",
+      eventAction: "クリック",
+      eventLabel: "商品について質問をする",
+    });
   };
 
   useEffect(() => {
@@ -43,7 +53,31 @@ const ItemIdIndex = () => {
 
   return (
     <LoggedIn titleTag={`${item.title} | コレナラ`}>
-      <div className="container mx-auto flex max-w-7xl mt-4">
+      <div className="container mx-auto flex max-w-7xl mt-4 flex-row-reverse">
+        <aside className="w-80 flex-none p-4 hidden lg:block">
+          <div className="mx-auto max-w-md rounded-lg bg-white shadow">
+            <div className="p-4">
+              <h3 className="text-xl font-medium text-gray-900 mb-3">
+                &yen; {item.price}
+              </h3>
+              <p className="text-xs text-blue-600 mb-2">
+                問い合わせフォームから質問してみましょう!
+              </p>
+              <Scroll
+                to="sec-question"
+                offset={-25}
+                smooth={true}
+                duration={300}
+                onClick={handleQuestion}
+                className="block w-full rounded-lg border border-primary-500 bg-primary-500 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 cursor-pointer"
+              >
+                商品について質問をする
+              </Scroll>
+            </div>
+          </div>
+          <hr className="my-6 h-px border-0 bg-gray-300" />
+          <AsideHelpList />
+        </aside>
         <main className="min-w-0 flex-1 px-4 mb-4 pt-4">
           <ol className="text-sm">
             <li className="inline-block">
@@ -90,9 +124,6 @@ const ItemIdIndex = () => {
           <p className="pt-4 font-bold text-xl text-secondary-500">
             {item.subTitle}
           </p>
-          <p className="pt-4 font-bold text-xl text-secondary-500">
-            &yen; {item.price}
-          </p>
           <div className="mt-4">
             <BasicTag className="mr-2" href="#" text="タグ名" />
             <BasicTag className="mr-2" href="#" text="タグ名" />
@@ -124,7 +155,7 @@ const ItemIdIndex = () => {
           </div>
           <div>{item.detail}</div>
           <hr className="my-10 h-px border-0 bg-gray-300" />
-          <section>
+          <section id="sec-question">
             <h2 className="font-bold text-xl mb-4">問い合わせフォーム</h2>
             <div>
               <textarea
@@ -172,15 +203,6 @@ const ItemIdIndex = () => {
             </section>
           </section>
         </main>
-        <aside className="w-80 flex-none p-4 hidden lg:block">
-          <div>
-            気の利いた要素
-            <br />
-            リスエストボタンとか編集ボタンとか置きたい・・・
-          </div>
-          <hr className="my-6 h-px border-0 bg-gray-300" />
-          <AsideHelpList />
-        </aside>
       </div>
     </LoggedIn>
   );
