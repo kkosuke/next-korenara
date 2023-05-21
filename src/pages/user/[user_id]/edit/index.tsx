@@ -3,19 +3,33 @@ import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BasicTag } from "@/component/atom/tag/BasicTag";
+import { app } from "@/lib/firebase";
 import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
 import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
 import { DropDownBasic } from "@/component/molecules/dropdown/basic";
+import { useAuthContext } from "@/context/AuthContext";
+import { getAuth, signOut } from "firebase/auth";
 
 const UserIdEdit = () => {
   const router = useRouter();
   const { user_id } = router.query;
-  const [user, setItem] = useState(dummyUser);
+  const { user } = useAuthContext();
+  const [userInfo, setItem] = useState(dummyUser);
+
+  const handleUserDeleteConfirm = () => {
+    const message = "ユーザー情報を削除しますか？";
+    if (!window.confirm(message)) {
+      // キャンセルを押下
+    }
+    user?.delete();
+    const auth = getAuth(app);
+    return signOut(auth);
+  };
 
   return (
     <LoggedIn
-      titleTag={`ユーザー情報編集 | ${user.name}さんのプロフィール | コレナラ`}
+      titleTag={`ユーザー情報編集 | ${userInfo.name}さんのプロフィール | コレナラ`}
     >
       <div className="container mx-auto  max-w-5xl">
         <div className="px-4">
@@ -32,7 +46,7 @@ const UserIdEdit = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={user.name}
+              defaultValue={userInfo.name}
             />
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
               アイコン
@@ -71,7 +85,7 @@ const UserIdEdit = () => {
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
               rows={20}
               placeholder=""
-              value={user.detail}
+              defaultValue={userInfo.detail}
             ></textarea>
 
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
@@ -80,7 +94,7 @@ const UserIdEdit = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={""}
+              defaultValue={""}
               placeholder="設定したいタグを入力してください"
             />
             <div className="mt-4">
@@ -100,6 +114,15 @@ const UserIdEdit = () => {
               </button>
             </div>
           </div>
+          <p className="text-right mt-4">
+            <button
+              type="button"
+              onClick={handleUserDeleteConfirm}
+              className="inline-flex items-center gap-1.5 text-red-500 underline hover:no-underline active:no-underline"
+            >
+              ユーザー情報を削除する
+            </button>
+          </p>
         </main>
       </div>
     </LoggedIn>
