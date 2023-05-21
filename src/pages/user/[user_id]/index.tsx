@@ -3,7 +3,6 @@ import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BasicTag } from "@/component/atom/tag/BasicTag";
-import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
 import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
 import { DropDownBasic } from "@/component/molecules/dropdown/basic";
@@ -13,11 +12,11 @@ import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
 
 const UserIdIndex = () => {
   const router = useRouter();
-  const { item_id } = router.query;
-  const [user, setItem] = useState(dummyUser);
+  const { user_id } = router.query;
+  const [userInfo, setUserInfo] = useState(dummyUser);
 
   return (
-    <LoggedIn titleTag={`${user.name}さんのプロフィール | コレナラ`}>
+    <LoggedIn titleTag={`${userInfo.name}さんのプロフィール | コレナラ`}>
       <div className="bg-white">
         <div className="container mx-auto  max-w-5xl p-4">
           <div className="flex flex-wrap gap-6">
@@ -31,7 +30,7 @@ const UserIdIndex = () => {
               />
             </div>
             <div className="self-center">
-              <h1 className="font-bold text-2xl mb-4">{user.name}</h1>
+              <h1 className="font-bold text-2xl mb-4">{userInfo.name}</h1>
               <div className="text-sm font-medium text-secondary-500">
                 最終ログイン {"8分"}前
               </div>
@@ -57,6 +56,7 @@ const UserIdIndex = () => {
                 </svg>
                 メッセージを送信
               </button>
+              {/* もしログインIDとページのuser_idが一致していた場合 */}
               <DropDownBasic
                 label={<>…</>}
                 className="inline-block align-top ml-3"
