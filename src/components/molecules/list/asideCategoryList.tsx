@@ -1,5 +1,5 @@
 import React from "react";
-import { TextArrowLink } from "@/component/atom/text/TextArrowLink";
+import { TextArrowLink } from "@/components/atoms/text/TextArrowLink";
 
 export const AsideCategoryList = () => {
   return (

@@ -3,7 +3,7 @@ import "keen-slider/keen-slider.min.css";
 import styles from "./index.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { DropDownBasic } from "@/component/molecules/dropdown/basic";
+import { DropDownBasic } from "@/components/molecules/dropdown/basic";
 
 type Props = {
   message: any;

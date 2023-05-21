@@ -1,13 +1,13 @@
-import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
-import { AsideCategoryList } from "@/component/molecules/list/asideCategoryList";
-import { AsideHelpList } from "@/component/molecules/list/asideHelpList";
-import { Pagination } from "@/component/molecules/pagination";
+import { BasicItemCard } from "@/components/molecules/card/basicItemCard";
+import { AsideCategoryList } from "@/components/molecules/list/asideCategoryList";
+import { AsideHelpList } from "@/components/molecules/list/asideHelpList";
+import { Pagination } from "@/components/molecules/pagination";
 
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 import { dummyItems } from "@/dummyData/items";
 import { useRouter } from "next/router";
 import React from "react";
-import ItemSort from "@/component/organisms/itemSort";
+import ItemSort from "@/components/organisms/itemSort";
 
 const SearchIndex = () => {
   const router = useRouter();

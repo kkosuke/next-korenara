@@ -1,13 +1,13 @@
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { BasicTag } from "@/component/atom/tag/BasicTag";
+import { BasicTag } from "@/components/atoms/tag/BasicTag";
 import { app } from "@/lib/firebase";
-import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
+import { ItemReviewList } from "@/components/molecules/list/itemReviewList";
 import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
-import { DropDownBasic } from "@/component/molecules/dropdown/basic";
+import { DropDownBasic } from "@/components/molecules/dropdown/basic";
 import { useAuthContext } from "@/context/AuthContext";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 

@@ -1,4 +1,4 @@
-import { LoggedOut } from "@/component/templates/top/loggedOutTemplate";
+import { LoggedOut } from "@/components/templates/top/loggedOutTemplate";
 import { useState } from "react";
 import React from "react";
 import { useRouter } from "next/router";

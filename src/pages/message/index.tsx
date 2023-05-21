@@ -1,6 +1,6 @@
-import { AsideCategoryList } from "@/component/molecules/list/asideCategoryList";
-import { AsideHelpList } from "@/component/molecules/list/asideHelpList";
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
+import { AsideCategoryList } from "@/components/molecules/list/asideCategoryList";
+import { AsideHelpList } from "@/components/molecules/list/asideHelpList";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";

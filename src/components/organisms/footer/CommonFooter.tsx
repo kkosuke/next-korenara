@@ -1,4 +1,4 @@
-import { TextLink } from "@/component/atom/text/TextLink";
+import { TextLink } from "@/components/atoms/text/TextLink";
 import Link from "next/link";
 import React from "react";
 
