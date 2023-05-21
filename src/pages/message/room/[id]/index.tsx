@@ -1,10 +1,10 @@
-import { AsideCategoryList } from "@/component/molecules/list/asideCategoryList";
-import { AsideHelpList } from "@/component/molecules/list/asideHelpList";
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
+import { AsideCategoryList } from "@/components/molecules/list/asideCategoryList";
+import { AsideHelpList } from "@/components/molecules/list/asideHelpList";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 import React, { useState } from "react";
 import Link from "next/link";
 import { dummyMessages } from "@/dummyData/messages";
-import { MessageCard } from "@/component/molecules/card/messageCard";
+import { MessageCard } from "@/components/molecules/card/messageCard";
 
 const MessageRoomIdIndex = () => {
   const [messages, setMessages] = useState(dummyMessages);

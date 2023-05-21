@@ -1,6 +1,6 @@
 import React from "react";
-import { LoggedInHeaderMenu } from "@/component/molecules/menu/loggedInHeaderMenu";
-import { LoggedInHeaderNotice } from "@/component/molecules/menu/loggedInHeaderNotice";
+import { LoggedInHeaderMenu } from "@/components/molecules/menu/loggedInHeaderMenu";
+import { LoggedInHeaderNotice } from "@/components/molecules/menu/loggedInHeaderNotice";
 import Link from "next/link";
 import { pushDataLayer } from "@/lib/analytics";
 

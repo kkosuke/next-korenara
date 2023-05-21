@@ -1,10 +1,10 @@
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 
 import { dummyItem } from "@/dummyData/item";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { BasicTag } from "@/component/atom/tag/BasicTag";
-import { ItemReviewList } from "@/component/molecules/list/itemReviewList";
+import { BasicTag } from "@/components/atoms/tag/BasicTag";
+import { ItemReviewList } from "@/components/molecules/list/itemReviewList";
 
 const ItemIdEdit = () => {
   const router = useRouter();

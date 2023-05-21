@@ -1,21 +1,21 @@
 import { useAuthContext } from "@/context/AuthContext";
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
-import { LoggedOut } from "@/component/templates/top/loggedOutTemplate";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
+import { LoggedOut } from "@/components/templates/top/loggedOutTemplate";
 
-import { AsideCategoryList } from "@/component/molecules/list/asideCategoryList";
-import { AsideHelpList } from "@/component/molecules/list/asideHelpList";
+import { AsideCategoryList } from "@/components/molecules/list/asideCategoryList";
+import { AsideHelpList } from "@/components/molecules/list/asideHelpList";
 
-import { CategoryCarousel } from "@/component/molecules/carousel/categoryCarousel";
-import { ItemCarousel } from "@/component/molecules/carousel/itemCarousel";
-import { UserCarousel } from "@/component/molecules/carousel/userCarousel";
-import { PopularCategoryItems } from "@/component/molecules/list/popularCategoryItems";
+import { CategoryCarousel } from "@/components/molecules/carousel/categoryCarousel";
+import { ItemCarousel } from "@/components/molecules/carousel/itemCarousel";
+import { UserCarousel } from "@/components/molecules/carousel/userCarousel";
+import { PopularCategoryItems } from "@/components/molecules/list/popularCategoryItems";
 
 import { dummyPopularCategory } from "@/dummyData/popularCategory";
 import { dummyRecommendItem } from "@/dummyData/recommendItem";
 import { dummyRecommendUser } from "@/dummyData/recommendUser";
 import { dummyPopularCategoryItem } from "@/dummyData/popularCategoryItem";
 import Link from "next/link";
-import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
+import { BasicItemCard } from "@/components/molecules/card/basicItemCard";
 import { dummyItems } from "@/dummyData/items";
 
 export default function Home() {

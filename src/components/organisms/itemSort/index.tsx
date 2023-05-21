@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { DropDownFilter } from "@/component/molecules/dropdown/filter";
-import { DropDownSort } from "@/component/molecules/dropdown/sort";
+import { DropDownFilter } from "@/components/molecules/dropdown/filter";
+import { DropDownSort } from "@/components/molecules/dropdown/sort";
 
 const ItemSort = () => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
-import { LoggedInHeader } from "@/component/organisms/header/loggedInHeader";
-import { CommonFooter } from "@/component/organisms/footer/CommonFooter";
+import { LoggedInHeader } from "@/components/organisms/header/loggedInHeader";
+import { CommonFooter } from "@/components/organisms/footer/CommonFooter";
 
 type Props = {
   titleTag: string;

@@ -1,14 +1,14 @@
-import { LoggedIn } from "@/component/templates/top/loggedInTemplate";
+import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { BasicTag } from "@/component/atom/tag/BasicTag";
+import { BasicTag } from "@/components/atoms/tag/BasicTag";
 import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
-import { DropDownBasic } from "@/component/molecules/dropdown/basic";
+import { DropDownBasic } from "@/components/molecules/dropdown/basic";
 import Link from "next/link";
 import { dummyItems } from "@/dummyData/items";
-import { BasicItemCard } from "@/component/molecules/card/basicItemCard";
+import { BasicItemCard } from "@/components/molecules/card/basicItemCard";
 
 const UserIdIndex = () => {
   const router = useRouter();
