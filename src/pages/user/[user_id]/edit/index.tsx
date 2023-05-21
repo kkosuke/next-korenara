@@ -9,13 +9,13 @@ import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
 import { DropDownBasic } from "@/component/molecules/dropdown/basic";
 import { useAuthContext } from "@/context/AuthContext";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 const UserIdEdit = () => {
   const router = useRouter();
   const { user_id } = router.query;
   const { user } = useAuthContext();
-  const [userInfo, setItem] = useState(dummyUser);
+  const [userInfo, setUserInfo] = useState(dummyUser);
 
   const handleUserDeleteConfirm = () => {
     const message = "ユーザー情報を削除しますか？";
@@ -42,6 +42,21 @@ const UserIdEdit = () => {
         <main className="px-4 mb-4">
           <p className="pt-4 font-bold text-3xl mb-4">ユーザー情報</p>
           <div className="rounded-lg bg-white p-4">
+            {user && (
+              <>
+                <p className="font-bold text-lg text-gray-600 mb-2">
+                  デバッグ情報
+                </p>
+                <div className="mb-8">
+                  <div>email：{user.email}</div>
+                  <div>uid：{user.uid}</div>
+                  <div>
+                    {user.emailVerified ? "メール認証済み" : "アドレス未認証"}
+                  </div>
+                </div>
+              </>
+            )}
+
             <p className="font-bold text-lg text-gray-600 mb-2">ユーザー名</p>
             <input
               type="text"
