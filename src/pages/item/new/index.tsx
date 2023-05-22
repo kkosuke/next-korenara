@@ -12,9 +12,12 @@ import {
 import { db } from "@/lib/firebase";
 
 import { BasicTag } from "@/components/atoms/tag/BasicTag";
+import { useAuthContext } from "@/context/AuthContext";
+import { itemCategories } from "@/constants/itemCategories";
 
 const ItemIdNew = () => {
   const router = useRouter();
+  const { user } = useAuthContext();
 
   const [itemTitle, setItemTitle] = useState<string>("");
   const [itemSubTitle, setItemSubTitle] = useState<string>("");
@@ -24,24 +27,26 @@ const ItemIdNew = () => {
     "タグテスト1",
     "タグテスト2",
   ]);
+  const [itemCategory, setItemCategory] = useState<number>(9999);
   const [itemDetail, setItemDetail] = useState<string>("");
 
   const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (itemTitle) {
+    if (itemTitle && user) {
       const message = "商品を作成しますか？";
       if (!window.confirm(message)) {
         return false;
       }
       const docRef = await addDoc(collection(db, "items"), {
         title: itemTitle,
-        subTitle: itemTitle,
+        subTitle: itemSubTitle,
         price: itemPrice,
         tags: itemTags,
         detail: itemDetail,
-        category: [1],
+        category: itemCategory,
         createdAt: serverTimestamp(),
         editedAt: serverTimestamp(),
+        userUid: user.uid,
       });
       resetUseState();
       router.push(
@@ -56,11 +61,21 @@ const ItemIdNew = () => {
     }
   };
 
-  const handelRemovableFunc = (obj: any) => {
+  const resetUseState = () => {
+    setItemTitle("");
+    setItemSubTitle("");
+    setItemPrice(0);
+    setItemTags([]);
+    setItemDetail("");
+  };
+
+  const handelRemoveTag = (obj: any) => {
     itemTags.splice(obj.idx, 1);
     setItemTags(() => [...itemTags]);
   };
   const handleTagsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 参考
+    // https://zenn.dev/takky94/articles/f3096bb59761ee
     if (e.nativeEvent.isComposing || e.key !== "Enter") return;
     e.preventDefault();
     if (itemTags.length < 5) {
@@ -70,16 +85,11 @@ const ItemIdNew = () => {
     } else {
       alert("タグは最大5つまで登録可能です");
     }
-
     return false;
   };
 
-  const resetUseState = () => {
-    setItemTitle("");
-    setItemSubTitle("");
-    setItemPrice(0);
-    setItemTags([]);
-    setItemDetail("");
+  const handleCategoryChange = (e: any) => {
+    setItemCategory(Number(e.target.value));
   };
 
   return (
@@ -145,8 +155,26 @@ const ItemIdNew = () => {
                   className="mr-2"
                   text={tag}
                   removable
-                  removableFunc={(e) => handelRemovableFunc({ e, idx })}
+                  removableFunc={(e) => handelRemoveTag({ e, idx })}
                 />
+              ))}
+            </div>
+
+            <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
+              カテゴリーの登録（作成予定）
+            </p>
+            <div className="mt-4">
+              {itemCategories.map((cat) => (
+                <label key={cat.id} className="mr-4">
+                  <input
+                    type="radio"
+                    name="category"
+                    value={cat.id}
+                    onChange={handleCategoryChange}
+                    checked={itemCategory === cat.id}
+                  />
+                  {cat.name}
+                </label>
               ))}
             </div>
 
