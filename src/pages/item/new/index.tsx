@@ -12,33 +12,44 @@ import {
 import { db } from "@/lib/firebase";
 
 import { BasicTag } from "@/components/atoms/tag/BasicTag";
+import { useAuthContext } from "@/context/AuthContext";
+import { itemCategories } from "@/constants/itemCategories";
 
 const ItemIdNew = () => {
   const router = useRouter();
+  const { user } = useAuthContext();
 
   const [itemTitle, setItemTitle] = useState<string>("");
   const [itemSubTitle, setItemSubTitle] = useState<string>("");
-  const [itemPrice, setItemPrice] = useState<number>(0);
+  const [itemPrice, setItemPrice] = useState<number>();
+  const [itemImage, setItemImage] = useState<string>("");
   const [itemEnteredTag, setItemEnteredTag] = useState<string>("");
-  const [itemTags, setItemTags] = useState<string[]>([]);
+
+  const [itemTags, setItemTags] = useState<string[]>([
+    "タグテスト1",
+    "タグテスト2",
+  ]);
+  const [itemCategory, setItemCategory] = useState<number>(9999);
   const [itemDetail, setItemDetail] = useState<string>("");
 
   const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (itemTitle) {
+    if (itemTitle && user) {
       const message = "商品を作成しますか？";
       if (!window.confirm(message)) {
         return false;
       }
       const docRef = await addDoc(collection(db, "items"), {
         title: itemTitle,
-        subTitle: itemTitle,
+        subTitle: itemSubTitle,
         price: itemPrice,
-        tags: ["タグテスト1", "タグテスト2"],
+        tags: itemTags,
         detail: itemDetail,
-        category: [1],
+        image: itemImage,
+        category: itemCategory,
         createdAt: serverTimestamp(),
         editedAt: serverTimestamp(),
+        userUid: user.uid,
       });
       resetUseState();
       router.push(
@@ -59,6 +70,29 @@ const ItemIdNew = () => {
     setItemPrice(0);
     setItemTags([]);
     setItemDetail("");
+  };
+
+  const handelRemoveTag = (obj: any) => {
+    itemTags.splice(obj.idx, 1);
+    setItemTags(() => [...itemTags]);
+  };
+  const handleTagsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 参考
+    // https://zenn.dev/takky94/articles/f3096bb59761ee
+    if (e.nativeEvent.isComposing || e.key !== "Enter") return;
+    e.preventDefault();
+    if (itemTags.length < 5) {
+      itemTags.push(itemEnteredTag);
+      setItemEnteredTag("");
+      setItemTags(() => [...itemTags]);
+    } else {
+      alert("タグは最大5つまで登録可能です");
+    }
+    return false;
+  };
+
+  const handleCategoryChange = (e: any) => {
+    setItemCategory(Number(e.target.value));
   };
 
   return (
@@ -104,9 +138,23 @@ const ItemIdNew = () => {
               onChange={(e) => setItemPrice(Number(e.target.value))}
             />
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
+              商品画像
+              <span className="font-normal text-xs text-gray-400 ml-2">
+                URLの形式で画像を指定してください。
+              </span>
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value={itemImage}
+              placeholder="https://sample.com/xxx/yyy/"
+              onChange={(e) => setItemImage(e.target.value)}
+            />
+
+            <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               タグの登録（作成予定）
               <span className="font-normal text-xs text-gray-400 ml-2">
-                設定すると特徴が利用者に伝わりやすくなります
+                設定すると特徴が利用者に伝わりやすくなります。タグは最大5つまで登録可能です。
               </span>
             </p>
             <input
@@ -115,10 +163,35 @@ const ItemIdNew = () => {
               value={itemEnteredTag}
               placeholder="設定したいタグを入力してください"
               onChange={(e) => setItemEnteredTag(e.target.value)}
+              onKeyDown={handleTagsKeyDown}
             />
             <div className="mt-4">
-              {itemTags.map((tag) => (
-                <BasicTag key={tag} className="mr-2" text={tag} removable />
+              {itemTags.map((tag, idx) => (
+                <BasicTag
+                  key={tag}
+                  className="mr-2"
+                  text={tag}
+                  removable
+                  removableFunc={(e) => handelRemoveTag({ e, idx })}
+                />
+              ))}
+            </div>
+
+            <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
+              カテゴリーの登録（作成予定）
+            </p>
+            <div className="mt-4">
+              {itemCategories.map((cat) => (
+                <label key={cat.id} className="mr-4">
+                  <input
+                    type="radio"
+                    name="category"
+                    value={cat.id}
+                    onChange={handleCategoryChange}
+                    checked={itemCategory === cat.id}
+                  />
+                  {cat.name}
+                </label>
               ))}
             </div>
 

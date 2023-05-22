@@ -15,7 +15,7 @@ const ItemSort = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(
-      "/search?category[]=1&category[]=2&category[]=99999&budgetMin=0&budgetMin=300000"
+      "/search?category[]=1&category[]=2&category[]=9999&budgetMin=0&budgetMin=300000"
     );
   };
 

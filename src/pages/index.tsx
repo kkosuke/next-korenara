@@ -10,13 +10,13 @@ import { ItemCarousel } from "@/components/molecules/carousel/itemCarousel";
 import { UserCarousel } from "@/components/molecules/carousel/userCarousel";
 import { PopularCategoryItems } from "@/components/molecules/list/popularCategoryItems";
 
-import { dummyPopularCategory } from "@/dummyData/popularCategory";
 import { dummyRecommendItem } from "@/dummyData/recommendItem";
 import { dummyRecommendUser } from "@/dummyData/recommendUser";
 import { dummyPopularCategoryItem } from "@/dummyData/popularCategoryItem";
 import Link from "next/link";
 import { BasicItemCard } from "@/components/molecules/card/basicItemCard";
 import { dummyItems } from "@/dummyData/items";
+import { itemCategories } from "@/constants/itemCategories";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -33,7 +33,7 @@ export default function Home() {
             <main className="min-w-0 flex-1 overflow-auto px-4">
               <section>
                 <h2 className="font-bold my-4 text-lg">人気カテゴリ</h2>
-                <CategoryCarousel items={dummyPopularCategory} />
+                <CategoryCarousel items={itemCategories} />
               </section>
               <section>
                 <h2 className="font-bold my-4 text-lg">おすすめ商品</h2>
@@ -96,7 +96,7 @@ export default function Home() {
           <div className="container mx-auto p-4">
             <section>
               <h2 className="font-bold my-4 text-lg">人気カテゴリ</h2>
-              <CategoryCarousel items={dummyPopularCategory} />
+              <CategoryCarousel items={itemCategories} />
             </section>
             <section>
               <h2 className="font-bold my-4 text-lg">おすすめ商品</h2>
