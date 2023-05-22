@@ -18,9 +18,12 @@ const ItemIdNew = () => {
 
   const [itemTitle, setItemTitle] = useState<string>("");
   const [itemSubTitle, setItemSubTitle] = useState<string>("");
-  const [itemPrice, setItemPrice] = useState<number>(0);
+  const [itemPrice, setItemPrice] = useState<number>();
   const [itemEnteredTag, setItemEnteredTag] = useState<string>("");
-  const [itemTags, setItemTags] = useState<string[]>([]);
+  const [itemTags, setItemTags] = useState<string[]>([
+    "タグテスト1",
+    "タグテスト2",
+  ]);
   const [itemDetail, setItemDetail] = useState<string>("");
 
   const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +37,7 @@ const ItemIdNew = () => {
         title: itemTitle,
         subTitle: itemTitle,
         price: itemPrice,
-        tags: ["タグテスト1", "タグテスト2"],
+        tags: itemTags,
         detail: itemDetail,
         category: [1],
         createdAt: serverTimestamp(),
@@ -51,6 +54,24 @@ const ItemIdNew = () => {
     } else {
       alert("タイトルを入力してください。");
     }
+  };
+
+  const handelRemovableFunc = (obj: any) => {
+    itemTags.splice(obj.idx, 1);
+    setItemTags(() => [...itemTags]);
+  };
+  const handleTagsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== "Enter") return;
+    e.preventDefault();
+    if (itemTags.length < 5) {
+      itemTags.push(itemEnteredTag);
+      setItemEnteredTag("");
+      setItemTags(() => [...itemTags]);
+    } else {
+      alert("タグは最大5つまで登録可能です");
+    }
+
+    return false;
   };
 
   const resetUseState = () => {
@@ -106,7 +127,7 @@ const ItemIdNew = () => {
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               タグの登録（作成予定）
               <span className="font-normal text-xs text-gray-400 ml-2">
-                設定すると特徴が利用者に伝わりやすくなります
+                設定すると特徴が利用者に伝わりやすくなります。タグは最大5つまで登録可能です。
               </span>
             </p>
             <input
@@ -115,10 +136,17 @@ const ItemIdNew = () => {
               value={itemEnteredTag}
               placeholder="設定したいタグを入力してください"
               onChange={(e) => setItemEnteredTag(e.target.value)}
+              onKeyDown={handleTagsKeyDown}
             />
             <div className="mt-4">
-              {itemTags.map((tag) => (
-                <BasicTag key={tag} className="mr-2" text={tag} removable />
+              {itemTags.map((tag, idx) => (
+                <BasicTag
+                  key={tag}
+                  className="mr-2"
+                  text={tag}
+                  removable
+                  removableFunc={(e) => handelRemovableFunc({ e, idx })}
+                />
               ))}
             </div>
 

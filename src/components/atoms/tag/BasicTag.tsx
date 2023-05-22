@@ -6,6 +6,7 @@ type Props = {
   text: string;
   className?: string;
   removable?: boolean;
+  removableFunc?: (obj: any) => void;
 };
 
 export const BasicTag: React.FC<Props> = ({
@@ -13,6 +14,7 @@ export const BasicTag: React.FC<Props> = ({
   text,
   className = "",
   removable = false,
+  removableFunc = () => {},
 }) => {
   return (
     <>
@@ -30,7 +32,7 @@ export const BasicTag: React.FC<Props> = ({
               className={`${className} inline-flex items-center gap-1 rounded-full bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-600`}
             >
               {text}
-              <button>
+              <button type="button" onClick={(e) => removableFunc(e)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
