@@ -4,17 +4,46 @@ import { AsideHelpList } from "@/components/molecules/list/asideHelpList";
 import { Pagination } from "@/components/molecules/pagination";
 
 import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
-import { dummyItems } from "@/dummyData/items";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemSort from "@/components/organisms/itemSort";
+import { db } from "@/lib/firebase";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { itemCategories } from "@/constants/itemCategories";
 
 const CategoryIndex = () => {
   const router = useRouter();
+  const [items, setItems] = useState<any>([]);
   const { category_id } = router.query;
+  // 参考：https://cpoint-lab.co.jp/article/201908/11323/
+  const thisCategoryData = itemCategories.find(
+    (cat) => cat.id === Number(category_id)
+  );
+
+  useEffect(() => {
+    const postData = collection(db, "items");
+    const q = query(postData, orderBy("createdAt", "desc"));
+    const _items: any[] = [];
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      // snapshot.docsを setItemsに入れたほうが、すんなり行きそうだが、
+      // うまく行かなかった。
+      snapshot.docs.map((doc) => {
+        if (doc.data().category === Number(category_id)) {
+          _items.push({ ...doc.data(), id: doc.id });
+        }
+      });
+      setItems(_items);
+    });
+    return () => {
+      unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category_id]);
+
+  console.log(items);
 
   return (
-    <LoggedIn titleTag="カテゴリー名から探す | コレナラ">
+    <LoggedIn titleTag={`${thisCategoryData?.name}から探す | コレナラ`}>
       <div className="container mx-auto flex pt-4">
         <aside className="w-80 flex-none p-4 hidden lg:block">
           <AsideCategoryList />
@@ -23,20 +52,16 @@ const CategoryIndex = () => {
         </aside>
         <main className="min-w-0 flex-1 px-4 pb-8">
           <h1 className="pt-4 font-bold text-2xl">
-            カテゴリー名 {"{"}
-            {category_id}
-            {"}"} から探す
+            {thisCategoryData?.name}から探す
           </h1>
           <p className="text-gray-600 my-4">
-            {"{"}
-            {1000}
-            {"}"}のプランがみつかりました。
+            {items.length}件のプランがみつかりました。
           </p>
           <div className="container mx-auto border border-slate-300 border-b-0 border-x-0 mt-4">
             <ItemSort />
             <section className="mb-4">
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-                {dummyItems.map((i) => (
+                {items.map((i: any) => (
                   <BasicItemCard key={i.id} item={i} />
                 ))}
               </div>

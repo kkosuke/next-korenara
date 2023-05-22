@@ -53,25 +53,27 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
           height={160}
         />
         <div className="p-4 pt-3">
-          <div className="flex flex-wrap items-center gap-3 mb-3">
-            <div className="h-8 w-8">
-              <Image
-                className="h-full w-full rounded-full object-cover object-center ring ring-white"
-                src={item.user.image}
-                alt=""
-                width={32}
-                height={32}
-              />
-            </div>
-            <div>
-              <div className="text-sm font-medium text-secondary-500">
-                {item.user.name}
+          {item.user && (
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              <div className="h-8 w-8">
+                <Image
+                  className="h-full w-full rounded-full object-cover object-center ring ring-white"
+                  src={item.user.image}
+                  alt=""
+                  width={32}
+                  height={32}
+                />
               </div>
-              <div className="text-xs text-secondary-400">
-                Joined in April 1976
+              <div>
+                <div className="text-sm font-medium text-secondary-500">
+                  {item.user.name}
+                </div>
+                <div className="text-xs text-secondary-400">
+                  Joined in April 1976
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <p className={`${styles.description} text-gray-500`}>{item.title}</p>
           <div className="mt-2">★ 5.0 (1)</div>
           <div className="mt-2">&yen; {item.price}</div>

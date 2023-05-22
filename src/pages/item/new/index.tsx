@@ -22,7 +22,9 @@ const ItemIdNew = () => {
   const [itemTitle, setItemTitle] = useState<string>("");
   const [itemSubTitle, setItemSubTitle] = useState<string>("");
   const [itemPrice, setItemPrice] = useState<number>();
+  const [itemImage, setItemImage] = useState<string>("");
   const [itemEnteredTag, setItemEnteredTag] = useState<string>("");
+
   const [itemTags, setItemTags] = useState<string[]>([
     "タグテスト1",
     "タグテスト2",
@@ -43,6 +45,7 @@ const ItemIdNew = () => {
         price: itemPrice,
         tags: itemTags,
         detail: itemDetail,
+        image: itemImage,
         category: itemCategory,
         createdAt: serverTimestamp(),
         editedAt: serverTimestamp(),
@@ -134,6 +137,20 @@ const ItemIdNew = () => {
               placeholder="商品の価格を整数で入力してください。"
               onChange={(e) => setItemPrice(Number(e.target.value))}
             />
+            <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
+              商品画像
+              <span className="font-normal text-xs text-gray-400 ml-2">
+                URLの形式で画像を指定してください。
+              </span>
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value={itemImage}
+              placeholder="https://sample.com/xxx/yyy/"
+              onChange={(e) => setItemImage(e.target.value)}
+            />
+
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               タグの登録（作成予定）
               <span className="font-normal text-xs text-gray-400 ml-2">

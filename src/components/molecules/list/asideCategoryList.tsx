@@ -13,7 +13,7 @@ export const AsideCategoryList = () => {
           <TextArrowLink href="/category/2" text="ライフスタイル" />
         </li>
         <li>
-          <TextArrowLink href="/category/99999" text="その他" />
+          <TextArrowLink href="/category/9999" text="その他" />
         </li>
       </ul>
     </section>

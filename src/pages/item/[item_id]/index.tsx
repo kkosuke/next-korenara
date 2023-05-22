@@ -153,11 +153,13 @@ const ItemIdIndex = () => {
               <p className="pt-4 font-bold text-xl text-secondary-500">
                 {itemInfo.subTitle}
               </p>
-              <div className="mt-4">
-                {itemInfo.tags.map((tag: any) => (
-                  <BasicTag key={tag} className="mr-2" text={tag} />
-                ))}
-              </div>
+              {itemInfo.tags && (
+                <div className="mt-4">
+                  {itemInfo.tags.map((tag: any) => (
+                    <BasicTag key={tag} className="mr-2" text={tag} />
+                  ))}
+                </div>
+              )}
               <div className="mt-2">★ 5.0 (1)（未作成）</div>
               <div className="mt-2">
                 最終更新日：
@@ -183,6 +185,14 @@ const ItemIdIndex = () => {
 
               <hr className="my-10 h-px border-0 bg-gray-300" />
               <div>{itemInfo.detail}</div>
+              <hr className="my-10 h-px border-0 bg-gray-300" />
+              <Image
+                className="w-full  object-cover object-center ring ring-white"
+                src={itemInfo.image}
+                alt=""
+                width={980}
+                height={320}
+              />
               <hr className="my-10 h-px border-0 bg-gray-300" />
 
               <section id="sec-question">
