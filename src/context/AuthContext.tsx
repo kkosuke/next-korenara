@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import { app } from "../lib/firebase";
+import { app } from "@/lib/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { UserType, AuthProps, AuthContextProps } from "@/types/index";
 
@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
     router.pathname === "/login" ||
     router.pathname === "/register" ||
     router.pathname === "/pages";
+
   useEffect(() => {
     const authStateChanged = onAuthStateChanged(auth, async (user) => {
       setUser(user);

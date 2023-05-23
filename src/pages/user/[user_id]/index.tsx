@@ -1,22 +1,39 @@
 import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BasicTag } from "@/components/atoms/tag/BasicTag";
 import Image from "next/image";
-import { dummyUser } from "@/dummyData/user";
 import { DropDownBasic } from "@/components/molecules/dropdown/basic";
 import Link from "next/link";
 import { dummyItems } from "@/dummyData/items";
 import { BasicItemCard } from "@/components/molecules/card/basicItemCard";
+import { useAuthContext } from "@/context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { dummyPlaneUser } from "@/dummyData/user";
 
 const UserIdIndex = () => {
   const router = useRouter();
   const { user_id } = router.query;
-  const [userInfo, setUserInfo] = useState(dummyUser);
+  const { user } = useAuthContext();
+  const [userInfo, setUserInfo] = useState<any>(dummyPlaneUser);
+
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, "users", user.uid);
+      const data = async () => {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserInfo(docSnap.data());
+        }
+      };
+      data();
+    }
+  }, [user]);
 
   return (
-    <LoggedIn titleTag={`${userInfo.name}さんのプロフィール | コレナラ`}>
+    <LoggedIn titleTag={`${userInfo.displayName}さんのプロフィール | コレナラ`}>
       <div className="bg-white">
         <div className="container mx-auto  max-w-5xl p-4">
           <div className="flex flex-wrap gap-6">
@@ -30,9 +47,11 @@ const UserIdIndex = () => {
               />
             </div>
             <div className="self-center">
-              <h1 className="font-bold text-2xl mb-4">{userInfo.name}</h1>
+              <h1 className="font-bold text-2xl mb-4">
+                {userInfo.displayName}
+              </h1>
               <div className="text-sm font-medium text-secondary-500">
-                最終ログイン {"8分"}前
+                最終ログイン {"8分"}前（未作成）
               </div>
             </div>
             <div className="ml-auto">

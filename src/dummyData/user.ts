@@ -1,3 +1,10 @@
+export const dummyPlaneUser = {
+  createdAt: new Date(),
+  editedAt: new Date(),
+  displayName: "名前未設定",
+  userId: "qwedrftgyhu",
+};
+
 export const dummyUser = {
   id: 1,
   name: "ダミー ユーザー",

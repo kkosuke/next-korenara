@@ -3,13 +3,12 @@ import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BasicTag } from "@/components/atoms/tag/BasicTag";
-import { app } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { ItemReviewList } from "@/components/molecules/list/itemReviewList";
 import Image from "next/image";
 import { dummyUser } from "@/dummyData/user";
-import { DropDownBasic } from "@/components/molecules/dropdown/basic";
 import { useAuthContext } from "@/context/AuthContext";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { doc, deleteDoc } from "firebase/firestore";
 
 const UserIdEdit = () => {
   const router = useRouter();
@@ -17,14 +16,22 @@ const UserIdEdit = () => {
   const { user } = useAuthContext();
   const [userInfo, setUserInfo] = useState(dummyUser);
 
-  const handleUserDeleteConfirm = () => {
+  const handleUserDeleteConfirm = async () => {
     const message = "ユーザー情報を削除しますか？";
     if (!window.confirm(message)) {
       // キャンセルを押下
     }
-    user?.delete();
-    const auth = getAuth(app);
-    return signOut(auth);
+    if (user) {
+      await deleteDoc(doc(db, "users", user.uid));
+      user.delete();
+      router.push(
+        {
+          pathname: `/`,
+          query: { situation: "delete_user" },
+        },
+        `/`
+      );
+    }
   };
 
   return (
