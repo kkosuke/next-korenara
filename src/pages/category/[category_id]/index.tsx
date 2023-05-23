@@ -21,8 +21,8 @@ const CategoryIndex = () => {
   );
 
   useEffect(() => {
-    const postData = collection(db, "items");
-    const q = query(postData, orderBy("createdAt", "desc"));
+    const itemsData = collection(db, "items");
+    const q = query(itemsData, orderBy("createdAt", "desc"));
     const _items: any[] = [];
     const unsubscribe = onSnapshot(q, (snapshot) => {
       // snapshot.docsを setItemsに入れたほうが、すんなり行きそうだが、

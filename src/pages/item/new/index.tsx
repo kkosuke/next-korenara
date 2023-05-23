@@ -3,12 +3,7 @@ import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  Timestamp,
-} from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 import { BasicTag } from "@/components/atoms/tag/BasicTag";
