@@ -6,7 +6,8 @@ import { app } from "@/lib/firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {
   collection,
-  addDoc,
+  setDoc,
+  doc,
   serverTimestamp,
   onSnapshot,
   query,
@@ -54,12 +55,11 @@ const RegisterIndex = () => {
   };
 
   const createUser = async (uid: any) => {
-    await addDoc(collection(db, "users"), {
+    await setDoc(doc(db, "users", uid), {
       displayName: "名前未設定",
       userId: userId,
       createdAt: serverTimestamp(),
       editedAt: serverTimestamp(),
-      userUid: uid,
     });
   };
 
