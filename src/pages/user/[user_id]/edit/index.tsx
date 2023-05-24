@@ -6,15 +6,15 @@ import { BasicTag } from "@/components/atoms/tag/BasicTag";
 import { db } from "@/lib/firebase";
 import { ItemReviewList } from "@/components/molecules/list/itemReviewList";
 import Image from "next/image";
-import { dummyUser } from "@/dummyData/user";
 import { useAuthContext } from "@/context/AuthContext";
 import { doc, deleteDoc } from "firebase/firestore";
 
 const UserIdEdit = () => {
   const router = useRouter();
   const { user_id } = router.query;
-  const { user } = useAuthContext();
-  const [userInfo, setUserInfo] = useState(dummyUser);
+  const { user, userData } = useAuthContext();
+  const [userEnteredTag, setUserEnteredTag] = useState<string>("");
+  const [userTags, setUserTags] = useState<string[]>(userData.tags);
 
   const handleUserDeleteConfirm = async () => {
     const message = "ユーザー情報を削除しますか？";
@@ -34,10 +34,27 @@ const UserIdEdit = () => {
     }
   };
 
+  const handelRemoveTag = (obj: any) => {
+    userTags.splice(obj.idx, 1);
+    setUserTags(() => [...userTags]);
+  };
+  const handleTagsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 参考
+    // https://zenn.dev/takky94/articles/f3096bb59761ee
+    if (e.nativeEvent.isComposing || e.key !== "Enter") return;
+    e.preventDefault();
+    if (userTags.length < 5) {
+      userTags.push(userEnteredTag);
+      setUserEnteredTag("");
+      setUserTags(() => [...userTags]);
+    } else {
+      alert("タグは最大5つまで登録可能です");
+    }
+    return false;
+  };
+
   return (
-    <LoggedIn
-      titleTag={`ユーザー情報編集 | ${userInfo.name}さんのプロフィール | コレナラ`}
-    >
+    <LoggedIn titleTag={`ユーザー情報編集  | コレナラ`}>
       <div className="container mx-auto  max-w-5xl">
         <div className="px-4">
           <div>
@@ -68,10 +85,31 @@ const UserIdEdit = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              defaultValue={userInfo.name}
+              value={userData.displayName}
             />
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
-              アイコン
+              ユーザーID
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value={userData.userId}
+            />
+
+            <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
+              アイコンURL
+              <span className="font-normal text-xs text-gray-400 ml-2">
+                「https://images.unsplash.com/」から始まるURLを入力してください
+              </span>
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value={userData.image}
+            />
+
+            <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
+              アイコン画像画像登録（作成予定）
             </p>
             <div>
               <label>
@@ -96,6 +134,32 @@ const UserIdEdit = () => {
               />
             </div>
 
+            <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
+              興味のあるジャンル（調整中）
+              <span className="font-normal text-xs text-gray-400 ml-2">
+                タグは最大5つまで登録可能です。同じ値は入力しなでください。
+              </span>
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+              value={userEnteredTag}
+              placeholder="設定したいタグを入力してください"
+              onChange={(e) => setUserEnteredTag(e.target.value)}
+              onKeyDown={handleTagsKeyDown}
+            />
+            <div className="mt-4">
+              {userTags.map((tag, idx) => (
+                <BasicTag
+                  key={tag}
+                  className="mr-2"
+                  text={tag}
+                  removable
+                  removableFunc={(e) => handelRemoveTag({ e, idx })}
+                />
+              ))}
+            </div>
+
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
               自己紹介
               <span className="font-normal text-xs text-gray-400 ml-2">
@@ -107,25 +171,8 @@ const UserIdEdit = () => {
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
               rows={20}
               placeholder=""
-              defaultValue={userInfo.detail}
+              defaultValue={userData.detail}
             ></textarea>
-
-            <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
-              興味のあるジャンル
-            </p>
-            <input
-              type="text"
-              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              defaultValue={""}
-              placeholder="設定したいタグを入力してください"
-            />
-            <div className="mt-4">
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-              <BasicTag className="mr-2" text="タグ名" removable />
-            </div>
 
             <div className="mt-4 text-center">
               <button

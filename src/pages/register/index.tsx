@@ -60,6 +60,9 @@ const RegisterIndex = () => {
       userId: userId,
       createdAt: serverTimestamp(),
       editedAt: serverTimestamp(),
+      image: "https://placehold.jp/150x150.png",
+      detail: "",
+      tags: [],
     });
   };
 
