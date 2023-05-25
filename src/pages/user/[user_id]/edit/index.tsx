@@ -1,20 +1,37 @@
 import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BasicTag } from "@/components/atoms/tag/BasicTag";
 import { db } from "@/lib/firebase";
 import { ItemReviewList } from "@/components/molecules/list/itemReviewList";
 import Image from "next/image";
 import { useAuthContext } from "@/context/AuthContext";
-import { doc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  collection,
+  setDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+} from "firebase/firestore";
+import { clearTimeout } from "timers";
 
 const UserIdEdit = () => {
   const router = useRouter();
   const { user_id } = router.query;
   const { user, userData } = useAuthContext();
+  const [formUserData, setFormUserData] = useState<any>(userData);
+  // タグの入力状態
   const [userEnteredTag, setUserEnteredTag] = useState<string>("");
-  const [userTags, setUserTags] = useState<string[]>(userData.tags);
+  // ユーザーIDの重複具合
+  const [isEnteredUserIdDuplicate, setIsEnteredUserIdDuplicate] =
+    useState<any>(false);
+
+  const [isValidating, setIsValidating] = useState<boolean>(false);
 
   const handleUserDeleteConfirm = async () => {
     const message = "ユーザー情報を削除しますか？";
@@ -34,26 +51,110 @@ const UserIdEdit = () => {
     }
   };
 
+  const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isValidating) {
+      alert("検証中");
+    }
+    if (isEnteredUserIdDuplicate) {
+      alert("ユーザーIDが重複しています。");
+    }
+    if (user && !isEnteredUserIdDuplicate) {
+      const message = "ユーザー情報を更新しますか？";
+      if (!window.confirm(message)) {
+        return false;
+      }
+      const userDocumentRef = doc(db, "users", user.uid);
+      try {
+        const docRef = await updateDoc(userDocumentRef, {
+          detail: formUserData.detail,
+          displayName: formUserData.displayName,
+          editedAt: serverTimestamp(),
+          tags: formUserData.tags,
+          userId: formUserData.userId,
+        }).then(() => {
+          router.push(
+            {
+              pathname: `/user/${formUserData.userId}?ref_code=user_edit_success`, // 本当の遷移URL
+              query: { situation: "user_edit_success" },
+            },
+            `/user/${formUserData.userId}?ref_code=user_edit_success` // 表示名
+          );
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        console.log("終了");
+      }
+    } else {
+      alert("userが見つかりません");
+    }
+  };
+
   const handelRemoveTag = (obj: any) => {
-    userTags.splice(obj.idx, 1);
-    setUserTags(() => [...userTags]);
+    formUserData.tags.splice(obj.idx, 1);
+    setFormUserData({
+      ...formUserData,
+      ...{ tags: [...formUserData.tags] },
+    });
   };
   const handleTagsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // 参考
     // https://zenn.dev/takky94/articles/f3096bb59761ee
     if (e.nativeEvent.isComposing || e.key !== "Enter") return;
     e.preventDefault();
-    if (userTags.length < 5) {
-      userTags.push(userEnteredTag);
+    if (formUserData.tags.length < 5) {
+      formUserData.tags.push(userEnteredTag);
       setUserEnteredTag("");
-      setUserTags(() => [...userTags]);
+      setFormUserData({
+        ...formUserData,
+        ...{ tags: [...formUserData.tags] },
+      });
     } else {
       alert("タグは最大5つまで登録可能です");
     }
     return false;
   };
 
-  return (
+  // userIDの重複チェック
+  // -----------------------------
+  let handleUserIdChangeTimeout: any;
+  const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsValidating(true);
+    const enteredValue = e.target.value;
+    clearTimeout(handleUserIdChangeTimeout);
+    setFormUserData({
+      ...formUserData,
+      ...{ userId: enteredValue },
+    });
+    handleUserIdChangeTimeout = setTimeout(async function () {
+      isDuplicateUserId(enteredValue)
+        .then((result) => {
+          setIsEnteredUserIdDuplicate(result);
+        })
+        .finally(() => {
+          setIsValidating(false);
+        });
+    }, 300);
+  };
+  const isDuplicateUserId = (enteredValue: string) =>
+    new Promise((resolve) => {
+      const usersData = collection(db, "users");
+      const q = query(usersData, orderBy("createdAt", "desc"));
+      if (enteredValue === userData.userId) {
+        resolve(false);
+      }
+      onSnapshot(q, (snapshot) => {
+        snapshot.docs.map((doc) => {
+          if (doc.data().userId === enteredValue) {
+            resolve(true);
+          }
+        });
+        resolve(false);
+      });
+    });
+
+  return userData.userId === user_id ? (
     <LoggedIn titleTag={`ユーザー情報編集  | コレナラ`}>
       <div className="container mx-auto  max-w-5xl">
         <div className="px-4">
@@ -65,7 +166,7 @@ const UserIdEdit = () => {
         </div>
         <main className="px-4 mb-4">
           <p className="pt-4 font-bold text-3xl mb-4">ユーザー情報</p>
-          <div className="rounded-lg bg-white p-4">
+          <form className="rounded-lg bg-white p-4" onSubmit={handelFormSubmit}>
             {user && (
               <>
                 <p className="font-bold text-lg text-gray-600 mb-2">
@@ -85,15 +186,36 @@ const UserIdEdit = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={userData.displayName}
+              value={formUserData.displayName}
+              onChange={(e) =>
+                setFormUserData({
+                  ...formUserData,
+                  ...{ displayName: e.target.value },
+                })
+              }
             />
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
               ユーザーID
             </p>
+            {isEnteredUserIdDuplicate && (
+              <>そのユーザーIDはすでに使用されています。</>
+            )}
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={userData.userId}
+              value={formUserData.userId}
+              required
+              onChange={(e) => handleUserIdChange(e)}
+            />
+
+            <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
+              メールアドレス（作成予定）
+            </p>
+            <input
+              type="text"
+              className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 text-gray-400"
+              readOnly
+              defaultValue={String(user?.email)}
             />
 
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
@@ -105,7 +227,13 @@ const UserIdEdit = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={userData.image}
+              value={formUserData.image}
+              onChange={(e) =>
+                setFormUserData({
+                  ...formUserData,
+                  ...{ image: e.target.value },
+                })
+              }
             />
 
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
@@ -127,7 +255,7 @@ const UserIdEdit = () => {
             <div className="h-16 w-16 mt-4">
               <Image
                 className="h-full w-full rounded-full object-cover object-center ring ring-white"
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={formUserData.image}
                 alt=""
                 width={64}
                 height={64}
@@ -149,7 +277,7 @@ const UserIdEdit = () => {
               onKeyDown={handleTagsKeyDown}
             />
             <div className="mt-4">
-              {userTags.map((tag, idx) => (
+              {formUserData.tags.map((tag: string, idx: number) => (
                 <BasicTag
                   key={tag}
                   className="mr-2"
@@ -171,18 +299,24 @@ const UserIdEdit = () => {
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
               rows={20}
               placeholder=""
-              defaultValue={userData.detail}
+              value={formUserData.detail}
+              onChange={(e) =>
+                setFormUserData({
+                  ...formUserData,
+                  ...{ detail: e.target.value },
+                })
+              }
             ></textarea>
 
             <div className="mt-4 text-center">
               <button
-                type="button"
+                type="submit"
                 className="rounded-lg border border-primary-500 bg-primary-500 px-24 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
               >
                 保存する
               </button>
             </div>
-          </div>
+          </form>
           <p className="text-right mt-4">
             <button
               type="button"
@@ -192,6 +326,14 @@ const UserIdEdit = () => {
               ユーザー情報を削除する
             </button>
           </p>
+        </main>
+      </div>
+    </LoggedIn>
+  ) : (
+    <LoggedIn titleTag={`ユーザー情報編集  | コレナラ`}>
+      <div className="container mx-auto  max-w-5xl">
+        <main className="px-4 py-8">
+          <p>このページを表示することはできません</p>
         </main>
       </div>
     </LoggedIn>

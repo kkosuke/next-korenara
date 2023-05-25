@@ -27,7 +27,6 @@ const UserIdIndex = () => {
       snapshot.docs.map((doc) => {
         if (doc.data().userId === user_id) {
           setThisUser(doc.data());
-          console.log(doc.data().tags);
         }
       });
     });
@@ -92,7 +91,7 @@ const UserIdIndex = () => {
                     >
                       <div className="p-1">
                         <Link
-                          href="/user/1/edit"
+                          href={`/user/${user_id}/edit`}
                           className="flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
                         >
                           プロフィールを編集
@@ -118,7 +117,7 @@ const UserIdIndex = () => {
             {thisUser.tags.length > 0 && (
               <div className="rounded-lg bg-white p-8 mt-4">
                 <h2 className="font-bold text-lg text-gray-600 mb-2">
-                  興味のあるジャンル（作成予定）
+                  興味のあるジャンル
                 </h2>
                 <div className="mt-4">
                   {thisUser.tags.map((tag: string) => (
