@@ -97,7 +97,7 @@ export const LoggedInHeaderNotice = () => {
 
       {isOpen && (
         <div className="absolute right-0 z-10 mt-2 divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg w-80">
-          <h3 className="py-2 px-4 text-lg">メッセージ</h3>
+          <h3 className="py-2 px-4 text-lg">メッセージ（作成予定）</h3>
           <ul className="divide-y divide-gray-200 max-h-[30vh] overflow-y-scroll">
             {noticeData.map((item, idx) => (
               <li key={item.id}>

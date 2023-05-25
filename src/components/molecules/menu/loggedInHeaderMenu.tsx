@@ -12,7 +12,7 @@ const logout = (): Promise<void> => {
 };
 
 export const LoggedInHeaderMenu = () => {
-  const { user } = useAuthContext();
+  const { user, userData } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -108,9 +108,9 @@ export const LoggedInHeaderMenu = () => {
         <div className="relative h-10 w-10">
           <Image
             className="h-full w-full rounded-full object-cover object-center ring ring-white"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            src={userData.image}
             alt=""
-            width={30}
+            width={40}
             height={40}
           />
         </div>
@@ -123,15 +123,15 @@ export const LoggedInHeaderMenu = () => {
               <div className="h-10 w-10">
                 <Image
                   className="h-full w-full rounded-full object-cover object-center ring ring-white"
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  src={userData.image}
                   alt=""
-                  width={30}
+                  width={40}
                   height={30}
                 />
               </div>
               <div className="text-sm">
                 <div className="font-medium text-gray-700">
-                  {user?.displayName ? user?.displayName : "名前_未登録"}
+                  {userData.displayName}
                 </div>
                 <div className="text-gray-400">{user?.email}</div>
               </div>
@@ -139,7 +139,7 @@ export const LoggedInHeaderMenu = () => {
           </div>
           <div className="p-1">
             <Link
-              href="/user/1"
+              href={`/user/${userData.userId}`}
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100"
               onClick={onGtmClickProfile}
             >
@@ -160,7 +160,7 @@ export const LoggedInHeaderMenu = () => {
               プロフィール
             </Link>
             <Link
-              href="/user/1/edit"
+              href={`/user/${userData.userId}/edit`}
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
               onClick={onGtmClickSetting}
             >
