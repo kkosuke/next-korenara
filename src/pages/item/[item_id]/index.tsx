@@ -21,32 +21,41 @@ const ItemIdIndex = () => {
   const item_id = router.query.item_id;
   const [item, setItem] = useState(dummyItem);
   const [itemInfo, setItemInfo] = useState<any>(null);
+  const [itemUser, setItemUser] = useState<any>(null);
 
   useEffect(() => {
     if (typeof item_id === "string") {
       const userDocumentRef = doc(db, "items", item_id);
-      getDoc(userDocumentRef).then((documentSnapshot) => {
-        if (documentSnapshot.data()) {
-          setItemInfo({ ...documentSnapshot.data(), item_id });
+      getDoc(userDocumentRef).then((doc) => {
+        if (doc.exists()) {
+          setItemInfo({ ...doc.data(), item_id });
+          getItemUser(doc.data().userUid);
         }
       });
     }
   }, [item_id]);
 
+  const getItemUser = async (userId: string) => {
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+    docSnap.exists() && setItemUser({ ...docSnap.data(), id: userId });
+  };
+
   useEffect(() => {
-    if (!!itemInfo) {
+    if (!!itemInfo && !!itemUser) {
       const asPath = router.asPath;
+      const url1 = `${asPath.split("?")[0]}__${itemUser.displayName}`;
       let masqueradeLocation = asPath.split("?")[1]
-        ? `${asPath.split("?")[0]}__${item.user.name}?${asPath.split("?")[1]}`
-        : `${asPath.split("?")[0]}__${item.user.name}`;
-      masqueradeLocation = masqueradeLocation;
+        ? url1 + `?${asPath.split("?")[1]}`
+        : url1;
       pushDataLayer({
         event: "ga4TrackPageView",
         masqueradeLocation: masqueradeLocation,
       });
+      console.log(masqueradeLocation);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemInfo]);
+  }, [itemInfo, itemUser]);
 
   const handleSendMessage = () => {
     pushDataLayer({
@@ -147,7 +156,7 @@ const ItemIdIndex = () => {
           <AsideHelpList />
         </aside>
         <main className="min-w-0 flex-1 px-4 mb-4 pt-4">
-          {itemInfo ? (
+          {itemInfo && itemUser ? (
             <>
               <p className="font-bold text-2xl">{itemInfo.title}</p>
               <p className="pt-4 font-bold text-xl text-secondary-500">
@@ -170,7 +179,7 @@ const ItemIdIndex = () => {
                 <div className="h-12 w-12">
                   <Image
                     className="h-full w-full rounded-full object-cover object-center ring ring-white"
-                    src={item.user.image}
+                    src={itemUser.image}
                     alt=""
                     width={48}
                     height={48}
