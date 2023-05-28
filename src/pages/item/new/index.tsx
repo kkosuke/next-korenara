@@ -14,35 +14,38 @@ const ItemIdNew = () => {
   const router = useRouter();
   const { user } = useAuthContext();
 
-  const [itemTitle, setItemTitle] = useState<string>("");
-  const [itemSubTitle, setItemSubTitle] = useState<string>("");
-  const [itemPrice, setItemPrice] = useState<number>();
-  const [itemImage, setItemImage] = useState<string>("");
+  const [itemInfo, setItemInfo] = useState<any>({
+    title: "",
+    subTitle: "",
+    price: "",
+    image: "",
+    tags: [],
+    detail: "",
+    category: "",
+  });
   const [itemEnteredTag, setItemEnteredTag] = useState<string>("");
-  const [itemTags, setItemTags] = useState<string[]>([]);
-  const [itemCategory, setItemCategory] = useState<number>();
-  const [itemDetail, setItemDetail] = useState<string>("");
 
   const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (itemTitle && user) {
+    // ログインしていたら…
+    if (user) {
       const message = "商品を作成しますか？";
       if (!window.confirm(message)) {
         return false;
       }
       const docRef = await addDoc(collection(db, "items"), {
-        title: itemTitle,
-        subTitle: itemSubTitle,
-        price: itemPrice,
-        tags: itemTags,
-        detail: itemDetail,
-        image: itemImage,
-        category: itemCategory,
+        title: itemInfo.title,
+        subTitle: itemInfo.subTitle,
+        price: itemInfo.price,
+        image: itemInfo.image,
+        tags: itemInfo.tags,
+        detail: itemInfo.detail,
+        category: itemInfo.category,
         createdAt: serverTimestamp(),
         editedAt: serverTimestamp(),
         userUid: user.uid,
       });
-      resetUseState();
+
       router.push(
         {
           pathname: `/item/${docRef.id}?ref_code=item_create_success`, // 本当の遷移URL
@@ -55,35 +58,33 @@ const ItemIdNew = () => {
     }
   };
 
-  const resetUseState = () => {
-    setItemTitle("");
-    setItemSubTitle("");
-    setItemPrice(0);
-    setItemTags([]);
-    setItemDetail("");
-  };
-
   const handelRemoveTag = (obj: any) => {
-    itemTags.splice(obj.idx, 1);
-    setItemTags(() => [...itemTags]);
+    itemInfo.tags.splice(obj.idx, 1);
+    setItemInfo({
+      ...itemInfo,
+      ...{ tags: [...itemInfo.tags] },
+    });
   };
   const handleTagsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // 参考
     // https://zenn.dev/takky94/articles/f3096bb59761ee
     if (e.nativeEvent.isComposing || e.key !== "Enter") return;
     e.preventDefault();
-    if (itemTags.length < 5) {
-      itemTags.push(itemEnteredTag);
+    if (itemEnteredTag.length < 1) {
+      alert("値を入力してください");
+      return false;
+    }
+    if (itemInfo.tags.length < 5) {
+      itemInfo.tags.push(itemEnteredTag);
+      setItemInfo({
+        ...itemInfo,
+        ...{ tags: [...itemInfo.tags] },
+      });
       setItemEnteredTag("");
-      setItemTags(() => [...itemTags]);
     } else {
       alert("タグは最大5つまで登録可能です");
     }
     return false;
-  };
-
-  const handleCategoryChange = (e: any) => {
-    setItemCategory(Number(e.target.value));
   };
 
   return (
@@ -104,9 +105,14 @@ const ItemIdNew = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={itemTitle}
               placeholder="商品名を入力してください"
-              onChange={(e) => setItemTitle(e.target.value)}
+              value={itemInfo.title}
+              onChange={(e) =>
+                setItemInfo({
+                  ...itemInfo,
+                  ...{ title: e.target.value },
+                })
+              }
             />
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
               サブタイトル（任意）
@@ -114,9 +120,14 @@ const ItemIdNew = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={itemSubTitle}
               placeholder="サブタイトルを入力してください"
-              onChange={(e) => setItemSubTitle(e.target.value)}
+              value={itemInfo.subTitle}
+              onChange={(e) =>
+                setItemInfo({
+                  ...itemInfo,
+                  ...{ subTitle: e.target.value },
+                })
+              }
             />
             <p className="font-bold text-lg text-gray-600 mb-2 mt-6">
               商品の価格（円）
@@ -124,9 +135,14 @@ const ItemIdNew = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={itemPrice}
               placeholder="商品の価格を整数で入力してください。"
-              onChange={(e) => setItemPrice(Number(e.target.value))}
+              value={itemInfo.price}
+              onChange={(e) =>
+                setItemInfo({
+                  ...itemInfo,
+                  ...{ price: Number(e.target.value) },
+                })
+              }
             />
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
               商品画像
@@ -137,9 +153,14 @@ const ItemIdNew = () => {
             <input
               type="text"
               className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-              value={itemImage}
               placeholder="https://sample.com/xxx/yyy/"
-              onChange={(e) => setItemImage(e.target.value)}
+              value={itemInfo.image}
+              onChange={(e) =>
+                setItemInfo({
+                  ...itemInfo,
+                  ...{ image: e.target.value },
+                })
+              }
             />
 
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
@@ -157,7 +178,7 @@ const ItemIdNew = () => {
               onKeyDown={handleTagsKeyDown}
             />
             <div className="mt-4">
-              {itemTags.map((tag, idx) => (
+              {itemInfo.tags.map((tag: string, idx: number) => (
                 <BasicTag
                   key={tag}
                   className="mr-2"
@@ -178,8 +199,13 @@ const ItemIdNew = () => {
                     type="radio"
                     name="category"
                     value={cat.id}
-                    onChange={handleCategoryChange}
-                    checked={itemCategory === cat.id}
+                    checked={itemInfo.category === cat.id}
+                    onChange={() =>
+                      setItemInfo({
+                        ...itemInfo,
+                        ...{ category: cat.id },
+                      })
+                    }
                   />
                   {cat.name}
                 </label>
@@ -196,8 +222,13 @@ const ItemIdNew = () => {
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
               rows={20}
               placeholder="商品に関する説明文を入力してください。"
-              value={itemDetail}
-              onChange={(e) => setItemDetail(e.target.value)}
+              value={itemInfo.detail}
+              onChange={(e) =>
+                setItemInfo({
+                  ...itemInfo,
+                  ...{ detail: e.target.value },
+                })
+              }
             ></textarea>
 
             <div className="mt-4 text-center">
