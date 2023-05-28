@@ -1,9 +1,7 @@
-import { AsideCategoryList } from "@/components/molecules/list/asideCategoryList";
 import { AsideHelpList } from "@/components/molecules/list/asideHelpList";
 
 import { LoggedIn } from "@/components/templates/top/loggedInTemplate";
 
-import { dummyItem } from "@/dummyData/item";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -13,27 +11,27 @@ import { ItemReviewList } from "@/components/molecules/list/itemReviewList";
 import { pushDataLayer } from "@/lib/analytics";
 import { Link as Scroll } from "react-scroll";
 import { db } from "@/lib/firebase";
-import { doc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { DateFnsTimestamp } from "@/components/atoms/date/DateFnsTimestamp";
+import { useAuthContext } from "@/context/AuthContext";
 
 const ItemIdIndex = () => {
   const router = useRouter();
   const item_id = router.query.item_id;
-  const [item, setItem] = useState(dummyItem);
+  const { userData } = useAuthContext();
   const [itemInfo, setItemInfo] = useState<any>(null);
   const [itemUser, setItemUser] = useState<any>(null);
 
   useEffect(() => {
-    if (typeof item_id === "string") {
-      const userDocumentRef = doc(db, "items", item_id);
-      getDoc(userDocumentRef).then((doc) => {
-        if (doc.exists()) {
-          setItemInfo({ ...doc.data(), item_id });
-          getItemUser(doc.data().userUid);
-        }
-      });
-    }
-  }, [item_id]);
+    const userDocumentRef = doc(db, "items", String(item_id));
+    getDoc(userDocumentRef).then((doc) => {
+      if (doc.exists()) {
+        setItemInfo({ ...doc.data(), item_id });
+        getItemUser(doc.data().userUid);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getItemUser = async (userId: string) => {
     const docRef = doc(db, "users", userId);
@@ -63,7 +61,7 @@ const ItemIdIndex = () => {
       eventCategory: "商品詳細",
       eventAction: "クリック",
       eventLabel: "メッセージを送信",
-      eventValue: item.price,
+      eventValue: itemInfo.price,
     });
     alert("未作成機能です");
   };
@@ -80,7 +78,7 @@ const ItemIdIndex = () => {
   return (
     <LoggedIn
       titleTag={`${
-        itemInfo ? itemInfo.title : "商品が見つかりません"
+        itemInfo ? itemInfo?.title : "商品が見つかりません"
       } | コレナラ`}
     >
       <div className="container mx-auto max-w-7xl mt-4">
@@ -123,7 +121,7 @@ const ItemIdIndex = () => {
               />
             </svg>
           </li>
-          <li className="inline-block">{item.title}</li>
+          <li className="inline-block">{itemInfo?.title}</li>
         </ol>
       </div>
       <div className="container mx-auto flex max-w-7xl mt-4 flex-row-reverse">
@@ -150,9 +148,27 @@ const ItemIdIndex = () => {
                   </Scroll>
                 </div>
               </div>
-              <hr className="my-6 h-px border-0 bg-gray-300" />
             </>
           )}
+
+          {userData?.id === itemUser?.id && (
+            <>
+              <div className="mx-auto max-w-md rounded-lg bg-white shadow mt-4">
+                <div className="p-4">
+                  <h3 className="text-md font-medium text-gray-900 mb-3">
+                    商品情報を更新はこちらから
+                  </h3>
+                  <Link
+                    href={`/item/${item_id}/edit`}
+                    className="block w-full rounded-lg border border-primary-500 bg-primary-500 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 cursor-pointer"
+                  >
+                    商品情報を更新する
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
+          <hr className="my-6 h-px border-0 bg-gray-300" />
           <AsideHelpList />
         </aside>
         <main className="min-w-0 flex-1 px-4 mb-4 pt-4">
@@ -187,7 +203,7 @@ const ItemIdIndex = () => {
                 </div>
                 <div>
                   <div className="text-sm font-medium text-secondary-500">
-                    {item.user.name}
+                    {itemUser.displayName}
                   </div>
                 </div>
               </div>
@@ -228,15 +244,15 @@ const ItemIdIndex = () => {
 
               <section>
                 <h2 className="font-bold text-xl mb-4">レビュー（作成予定）</h2>
-                <ItemReviewList item={item} />
+                <ItemReviewList item={itemInfo} />
                 <section className="mt-8">
                   <h2 className="font-bold text-md mb-4">
-                    レビューを投稿する（もし商品を購入していたら）
+                    レビューを投稿する（もし商品を購入していたら）（作成予定）
                   </h2>
                   <input
                     type="text"
                     className="mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                    placeholder="タイトル"
+                    placeholder="評価数 select OR ★をクリック"
                   />
                   <textarea
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50"
