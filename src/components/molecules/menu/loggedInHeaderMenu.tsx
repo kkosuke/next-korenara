@@ -12,7 +12,7 @@ const logout = (): Promise<void> => {
 };
 
 export const LoggedInHeaderMenu = () => {
-  const { user, userData } = useAuthContext();
+  const { userData } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -108,7 +108,7 @@ export const LoggedInHeaderMenu = () => {
         <div className="relative h-10 w-10">
           <Image
             className="h-full w-full rounded-full object-cover object-center ring ring-white"
-            src={userData.image}
+            src={userData?.image}
             alt=""
             width={40}
             height={40}
@@ -120,20 +120,17 @@ export const LoggedInHeaderMenu = () => {
         <div className="absolute right-0 z-10 mt-2 w-60 divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg">
           <div className="py-3 px-4">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10">
+              <div className="w-1/5">
                 <Image
                   className="h-full w-full rounded-full object-cover object-center ring ring-white"
                   src={userData.image}
                   alt=""
                   width={40}
-                  height={30}
+                  height={40}
                 />
               </div>
-              <div className="text-sm">
-                <div className="font-medium text-gray-700">
-                  {userData.displayName}
-                </div>
-                <div className="text-gray-400">{user?.email}</div>
+              <div className="w-4/5 font-medium text-gray-700 truncate">
+                {userData.displayName}
               </div>
             </div>
           </div>
