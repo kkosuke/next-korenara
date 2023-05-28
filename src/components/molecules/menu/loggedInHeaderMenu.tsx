@@ -12,7 +12,7 @@ const logout = (): Promise<void> => {
 };
 
 export const LoggedInHeaderMenu = () => {
-  const { user, userData } = useAuthContext();
+  const { userData } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
