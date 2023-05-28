@@ -99,6 +99,7 @@ const ItemIdEdit = () => {
     const message = "商品情報を削除しますか？登録した商品も削除されます。";
     if (!window.confirm(message)) {
       // キャンセルを押下
+      return false;
     }
     await deleteDoc(doc(db, "items", itemInfo.id));
     router.push(
@@ -219,6 +220,25 @@ const ItemIdEdit = () => {
                   </div>
                 )}
               </div>
+
+              <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
+                商品画像
+                <span className="font-normal text-xs text-gray-400 ml-2">
+                  URLの形式で画像を指定してください。
+                </span>
+              </p>
+              <input
+                type="text"
+                className="block w-full rounded-md border-gray-300 py-3 text-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+                value={itemInfo.image}
+                onChange={(e) =>
+                  setItemInfo({
+                    ...itemInfo,
+                    ...{ image: e.target.value },
+                  })
+                }
+                placeholder="https://sample.com/xxx/yyy/"
+              />
 
               <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
                 商品の説明

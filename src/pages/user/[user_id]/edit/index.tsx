@@ -37,6 +37,7 @@ const UserIdEdit = () => {
     const message = "ユーザー情報を削除しますか？登録した商品も削除されます。";
     if (!window.confirm(message)) {
       // キャンセルを押下
+      return false;
     }
     if (user) {
       // itemの削除

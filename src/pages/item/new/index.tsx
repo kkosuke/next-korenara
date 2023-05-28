@@ -19,11 +19,8 @@ const ItemIdNew = () => {
   const [itemPrice, setItemPrice] = useState<number>();
   const [itemImage, setItemImage] = useState<string>("");
   const [itemEnteredTag, setItemEnteredTag] = useState<string>("");
-  const [itemTags, setItemTags] = useState<string[]>([
-    "タグテスト1",
-    "タグテスト2",
-  ]);
-  const [itemCategory, setItemCategory] = useState<number>(9999);
+  const [itemTags, setItemTags] = useState<string[]>([]);
+  const [itemCategory, setItemCategory] = useState<number>();
   const [itemDetail, setItemDetail] = useState<string>("");
 
   const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -146,7 +143,7 @@ const ItemIdNew = () => {
             />
 
             <p className="mt-6 font-bold text-lg text-gray-600 mb-2">
-              タグの登録（調整中）
+              タグの登録
               <span className="font-normal text-xs text-gray-400 ml-2">
                 設定すると特徴が利用者に伝わりやすくなります。タグは最大5つまで登録可能です。同じ値は入力しないでください。
               </span>
