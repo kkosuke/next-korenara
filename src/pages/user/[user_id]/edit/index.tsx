@@ -34,11 +34,22 @@ const UserIdEdit = () => {
   const [isValidating, setIsValidating] = useState<boolean>(false);
 
   const handleUserDeleteConfirm = async () => {
-    const message = "ユーザー情報を削除しますか？";
+    const message = "ユーザー情報を削除しますか？登録した商品も削除されます。";
     if (!window.confirm(message)) {
       // キャンセルを押下
     }
     if (user) {
+      // itemの削除
+      const itemsData = collection(db, "items");
+      const q = query(itemsData, orderBy("createdAt", "desc"));
+      onSnapshot(q, (snapshot) => {
+        snapshot.docs.map((item) => {
+          if (item.data().userUid === user.uid) {
+            deleteDoc(doc(db, "items", item.id));
+          }
+        });
+      });
+
       await deleteDoc(doc(db, "users", user.uid));
       user.delete();
       router.push(
