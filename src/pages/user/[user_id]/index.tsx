@@ -10,31 +10,55 @@ import { dummyItems } from "@/dummyData/items";
 import { BasicItemCard } from "@/components/molecules/card/basicItemCard";
 import { useAuthContext } from "@/context/AuthContext";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  where,
+} from "firebase/firestore";
 
 const UserIdIndex = () => {
   const router = useRouter();
   const { user_id } = router.query;
   const { userData } = useAuthContext();
   const [thisUser, setThisUser] = useState<any>();
+  const [items, setItems] = useState<any>([]);
 
   useEffect(() => {
-    const itemsData = collection(db, "users");
-    const q = query(itemsData);
+    // ユーザー情報の取得
+    const q = query(collection(db, "users"), where("userId", "==", user_id));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      // snapshot.docsを setItemsに入れたほうが、すんなり行きそうだが、
-      // うまく行かなかった。
       snapshot.docs.map((doc) => {
-        if (doc.data().userId === user_id) {
-          setThisUser(doc.data());
-        }
+        setThisUser({ ...doc.data(), id: doc.id });
       });
     });
+
     return () => {
       unsubscribe();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
+
+  useEffect(() => {
+    if (thisUser) {
+      const itemsQ = query(
+        collection(db, "items"),
+        where("userUid", "==", thisUser.id)
+      );
+      const _items: any[] = [];
+      const unsubscribe = onSnapshot(itemsQ, (snapshot) => {
+        snapshot.docs.map((doc) => {
+          _items.push({ ...doc.data(), id: doc.id });
+        });
+        setItems(_items);
+      });
+      return () => {
+        unsubscribe();
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [thisUser]);
 
   return (
     thisUser && (
@@ -126,24 +150,26 @@ const UserIdIndex = () => {
                 </div>
               </div>
             )}
-            <div className="rounded-lg bg-white p-8 mt-4">
-              <h2 className="font-bold text-lg text-gray-600 mb-4">
-                作成したサービス（作成予定）
-              </h2>
-              <div className="grid grid-cols-4 gap-4">
-                {dummyItems.map((i) => (
-                  <BasicItemCard key={i.id} item={i} />
-                ))}
+            {items && (
+              <div className="rounded-lg bg-white p-8 mt-4">
+                <h2 className="font-bold text-lg text-gray-600 mb-4">
+                  作成したサービス
+                </h2>
+                <div className="grid grid-cols-4 gap-4">
+                  {items.map((i: any) => (
+                    <BasicItemCard key={i.id} item={i} />
+                  ))}
+                </div>
+                <div className="mt-4 text-center">
+                  <button
+                    type="button"
+                    className="rounded-lg border border-primary-500 bg-primary-500 px-24 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
+                  >
+                    もっと見る（作成予定）
+                  </button>
+                </div>
               </div>
-              <div className="mt-4 text-center">
-                <button
-                  type="button"
-                  className="rounded-lg border border-primary-500 bg-primary-500 px-24 py-3 text-center text-base font-medium text-white shadow-sm transition-all hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"
-                >
-                  もっと見る
-                </button>
-              </div>
-            </div>
+            )}
           </main>
         </div>
       </LoggedIn>

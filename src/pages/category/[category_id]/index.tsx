@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ItemSort from "@/components/organisms/itemSort";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { itemCategories } from "@/constants/itemCategories";
 
 const CategoryIndex = () => {
@@ -21,16 +21,16 @@ const CategoryIndex = () => {
   );
 
   useEffect(() => {
-    const itemsData = collection(db, "items");
-    const q = query(itemsData, orderBy("createdAt", "desc"));
+    const q = query(
+      collection(db, "items"),
+      where("category", "==", Number(category_id))
+    );
+    // orderBy("createdAt", "desc"),
+
     const _items: any[] = [];
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      // snapshot.docsを setItemsに入れたほうが、すんなり行きそうだが、
-      // うまく行かなかった。
       snapshot.docs.map((doc) => {
-        if (doc.data().category === Number(category_id)) {
-          _items.push({ ...doc.data(), id: doc.id });
-        }
+        _items.push({ ...doc.data(), id: doc.id });
       });
       setItems(_items);
     });
@@ -39,8 +39,6 @@ const CategoryIndex = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category_id]);
-
-  console.log(items);
 
   return (
     <LoggedIn titleTag={`${thisCategoryData?.name}から探す | コレナラ`}>
