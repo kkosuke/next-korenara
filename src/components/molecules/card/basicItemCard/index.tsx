@@ -6,12 +6,14 @@ import Link from "next/link";
 import { pushDataLayer } from "@/lib/analytics";
 import { useRouter } from "next/router";
 import { directoryNameFromPathName } from "@/constants/utils/directoryNameFromPathName";
+import { DateFnsTimestamp } from "@/components/atoms/date/DateFnsTimestamp";
 
 type Props = {
   item: {
     title: string;
     id: number;
     image: string;
+    editedAt: any;
     user: {
       id: number;
       name: string;
@@ -77,6 +79,9 @@ export const BasicItemCard: React.FC<Props> = ({ item, tagName = "div" }) => {
           <p className={`${styles.description} text-gray-500`}>{item.title}</p>
           <div className="mt-2">★ 5.0 (1)</div>
           <div className="mt-2">&yen; {item.price}</div>
+          <p className="mt-2">
+            <DateFnsTimestamp dateObject={item.editedAt.toDate()} />
+          </p>
         </div>
       </Link>
     </Tag>
