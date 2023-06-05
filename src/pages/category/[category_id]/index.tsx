@@ -8,13 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ItemSort from "@/components/organisms/itemSort";
 import { db } from "@/lib/firebase";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { itemCategories } from "@/constants/itemCategories";
 
 const CategoryIndex = () => {
