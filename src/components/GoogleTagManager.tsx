@@ -15,7 +15,7 @@ const GoogleTagManager: FC<Props> = ({ gtmId }) => {
         dangerouslySetInnerHTML={{
           __html: `
         window.dataLayer = window.dataLayer || [];
-        dataLayer.push({gtm_session_id: 'test_gtm_session_id'})
+        dataLayer.push({event: 'page_view', gtm_session_id: 'test_gtm_session_id'})
         `,
         }}
       />
