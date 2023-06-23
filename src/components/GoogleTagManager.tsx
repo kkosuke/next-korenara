@@ -10,6 +10,8 @@ const GoogleTagManager: FC<Props> = ({ gtmId }) => {
   return (
     <>
       <Script
+        id="gtm_session_id"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
         window.dataLayer = window.dataLayer || [];
