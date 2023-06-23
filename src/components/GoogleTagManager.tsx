@@ -9,6 +9,14 @@ type Props = {
 const GoogleTagManager: FC<Props> = ({ gtmId }) => {
   return (
     <Script
+    dangerouslySetInnerHTML={{
+      __html: `
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({gtm_session_id: 'test_gtm_session_id'})
+      `,
+    }}
+    />
+    <Script
       id="gtm"
       strategy="afterInteractive"
       dangerouslySetInnerHTML={{
